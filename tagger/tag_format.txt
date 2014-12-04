@@ -1,0 +1,20 @@
+BASE:
+{
+        "Dataset": "Path To Original Images"
+        "width": (int) the width of the images after crop
+        "height": (int) the height of the images after crop
+        "posPath": (string) path to positive extracted objects
+        "negPath": (string) path to negitive extracted objects
+        "images": [Image, ...]
+}
+
+Image:
+{
+        "name": (string) the image filename
+        "tags": [Tag, ...]
+}
+Tag:
+{
+        "POS": (int[])[x, y of top left corner]
+        "Size": (int[]) [width, heigth]
+}
