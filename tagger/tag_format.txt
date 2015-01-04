@@ -1,8 +1,8 @@
 BASE:
 {
         "dataset": "Path To Original Images"
-        "width": (int) the width of the images after crop
-        "height": (int) the height of the images after crop
+        "width": (int) the base width of tags
+        "height": (int) the height base height
         "images": [Image, ...]
         "classes": (string[]) a list of all of the classes that have been tagged
 }
@@ -15,7 +15,6 @@ Image:
 Tag:
 {
         "pos": (int[])[x, y of top left corner]
-        "size": (int[]) [width, heigth]
-        "path": (string) Path to new image
+        "scale": (int) scale relative to regular tag size 
         "class": (int) the id of the tag class
 }

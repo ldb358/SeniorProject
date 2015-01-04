@@ -4,6 +4,7 @@ import os
 import cv2
 import Tkinter as tk
 import threading
+import json
 
 accepted_exts = (".jpg", ".png", ".ppm")
 
@@ -46,8 +47,8 @@ class Image(object):
         self.tags = []
 
     #appends a new tag object
-    def add_tag(self, x, y, w, h, clss):
-        self.tags.append(Tag(x, y, w, h, clss))        
+    def add_tag(self, tag):
+        self.tags.append(tag)        
         return self.tags[-1]
 
 #
@@ -62,19 +63,29 @@ class Image(object):
 #
 
 class Tag(object):
-    def __init__(self, x, y, w, h, clss):
+    def __init__(self, x, y, scale, clss):
         self.x = x
         self.y = y
-        self.w = w
-        self.h = h
+        self.scale = scale
         self.clss = clss
 
-    def move(self, x, y, w, h):
+    def move(self, x, y, scale=1):
         self.x = x
         self.y = y
-        self.w = w
-        self.h = h
+    
+    def change_scale(self, i):
+        self.scale = round(.1*i+.1, 1)
+    
+    def change_class(self, i):
+        self.clss = i
 
+    def __str__(self):
+        jsondict = { 
+            "pos": [self.x, self.y],
+            "scale": self.scale,
+            "class": self.clss
+        }
+        return json.dumps(jsondict);
 #
 # This class handles the callbacks for the two different guis to modify our
 # tag data classes
@@ -86,24 +97,57 @@ class ImageTagger(object):
         self.classes = []
         self.cur_class = -1
         self.tagger = tagger
-        
+        self.tag = None
+        self.img = None
+
     def tag_image(self, cvimg):
+        self.img = cvimg
         cv2.imshow("tagging", cvimg)
-        tag = Tag(0, 0, 0, 0, self.cur_class)
-        cv2.setMouseCallback("tagging", self.tag_image_click, [cvimg])
+        self.tag = Tag(0, 0, 1, self.cur_class)
+        self.tagger.cur_image.add_tag(self.tag)
+        cv2.createTrackbar("scale", "tagging", 9, 9, self.change_scale) 
+        cv2.setMouseCallback("tagging", self.tag_image_click)
         #wait for a key press and get the char of the key what was pressed
         key = cv2.waitKey(0) & 255
+        while key != ord(" "):
+            key = cv2.waitKey(0) & 255
+        self.tag.change_class(self.cur_class)
 
+    def change_scale(self, i): 
+        if len(self.classes) == 0:
+            return
+
+        width = int(self.tagger.width*self.tag.scale)
+        height = int(self.tagger.height*self.tag.scale)
+        
+        self.tag.change_scale(i)
+        
+        dw = int(self.tagger.width*self.tag.scale)-width
+        dh = int(self.tagger.height*self.tag.scale)-height
+        self.tag.move(int(self.tag.x-dw/2), int(self.tag.y-dh/2))
+        cvimg = self.img.copy()
+        self.draw_box(cvimg)
+        cv2.imshow("tagging", cvimg)
+    
     def tag_image_click(self, event, x, y, flags, param):
         if event == cv2.EVENT_LBUTTONDOWN:
-            cvimg = param[0].copy() 
+            cvimg = self.img.copy() 
             if self.cur_class > -1:
-                cv2.rectangle(cvimg, (x-(self.tagger.width/2), y-(self.tagger.height/2)), (x+(self.tagger.width/2), y+(self.tagger.height/2)), (255, 0, 0))
-                size = cv2.getTextSize(self.classes[self.cur_class], cv2.FONT_HERSHEY_PLAIN, 1, 9)
-                cv2.putText(cvimg, self.classes[self.cur_class], (x-size[0][0]/2, y-size[0][1]/2), cv2.FONT_HERSHEY_PLAIN, 1, 9)
+                width = int(self.tagger.width*self.tag.scale)
+                height = int(self.tagger.height*self.tag.scale)
+                self.tag.move(x-(width/2), y-(height/2))
+                self.draw_box(cvimg)
             else:
                 cv2.putText(cvimg, "You must select an object type.", (x, y), cv2.FONT_HERSHEY_PLAIN, 1, 9)
             cv2.imshow("tagging", cvimg) 
+
+    def draw_box(self, cvimg):
+        width = int(self.tagger.width*self.tag.scale)
+        height = int(self.tagger.height*self.tag.scale)
+        cv2.rectangle(cvimg, (self.tag.x, self.tag.y),(self.tag.x+width, self.tag.y+height), (255, 0, 0))
+        size = cv2.getTextSize(self.classes[self.cur_class], cv2.FONT_HERSHEY_PLAIN, 1, 9)
+        cv2.putText(cvimg, self.classes[self.cur_class], (self.tag.x+width/2-size[0][0]/2, self.tag.y+height/2-size[0][1]/2), cv2.FONT_HERSHEY_PLAIN, 1, 9)
+
 
     def add_class(self, clss):
         self.classes.append(clss)
@@ -130,34 +174,40 @@ class TagGui(threading.Thread):
         self.mainframe = tk.Frame(self.root)
         self.mainframe.grid(column=0, row=0, sticky="NWES")
        
-        curclasslabel = tk.Label(self.mainframe, text="Current Class:")
+        curclasslabel = tk.Label(self.mainframe, text="Current Class:", justify="right")
         curclasslabel.grid(column=0, row=0, sticky="NWES")
 
-        self.labeltext = tk.StringVar("None Selected")
-        curclass = tk.Label(self.mainframe, textvariable=self.labeltext)
-
+        self.labeltext = tk.StringVar()
+        curclass = tk.Label(self.mainframe, textvariable=self.labeltext, justify="left")
+        curclass.grid(column=1, row=0, sticky="NSEW")
+        self.labeltext.set("None Selected")
+        
         self.entrytext = tk.StringVar()
         classentry = tk.Entry(self.mainframe, textvariable=self.entrytext)
-        classentry.grid(column=0, row=1, sticky="NWES")
+        classentry.grid(column=0, row=1, columnspan=2, sticky="NWES")
 
         button = tk.Button(self.mainframe, text = 'Add Class', command=self.add_button)
-        button.grid(column=0, row=2, sticky="NWES")
+        button.grid(column=0, row=2, columnspan=2, sticky="NWES")
+
+        self.mainframe.bind("<Return>", self.add_button)
+
         self.root.mainloop()
 
     def add_button(self):
         clss = self.entrytext.get()
         self.entrytext.set("")
-        if self.classes.get(clss) == None:
+        if self.classes.get(clss) == None and not clss.strip() == "":
             self.classes[clss] = self.class_count
             class_count = self.class_count
             button = tk.Button(self.mainframe, text=clss, command=lambda: self.change_class(class_count))
-            button.grid(column=0, row=3+class_count, sticky="NWSE"); 
+            button.grid(column=0, row=3+class_count, columnspan=2, sticky="NWSE") 
+            self.img_tagger.add_class(clss)
             self.change_class(class_count)
-            self.img_tagger.add_class(clss);
             self.class_count += 1
             
     def change_class(self, i):
         self.img_tagger.change_class(i)
+        self.labeltext.set(self.img_tagger.classes[i])
 
 
 def main():
@@ -214,7 +264,9 @@ def main():
                 
                 tagger.add_image(fullpath)
                 img_tagger.tag_image(img)
-                
+                for i in tagger.images:
+                    for x in i.tags:
+                        print str(x)
                 #display the image
                 cv2.waitKey(1)
 
