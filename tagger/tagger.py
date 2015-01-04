@@ -299,6 +299,7 @@ def main():
     #if we are resuming we need to readd our buttons
     for clss in tagger.classes:
         app.threadsafe_add_button(text=clss)
+        del tagger.classes[-1]
 
     #loop through every file in the test dataset directory
     for root, _, files in os.walk(abspath):
