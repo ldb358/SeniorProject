@@ -45,8 +45,16 @@ class Tagger(object):
             "classes": self.classes
         }
         return json.dumps(jsondict)
-
-
+    
+    @staticmethod
+    def from_JSON(jsonstr):
+        tagger_json = json.loads(jsonstr)
+        tagger = Tagger(tagger_json["dataset"], tagger_json["width"],
+                tagger_json["height"])
+        tagger.classes = tagger_json["classes"]
+        for img in tagger_json["images"]:
+            tagger.images.append(Image.from_JSON(img))
+        return tagger
 #
 # this class is a data wrapper for the Image object in the JSON Api
 # it takes a filename of the image to init
@@ -67,6 +75,13 @@ class Image(object):
             "tags" : [x.jsonable() for x in self.tags]
         }
         return jsondict
+
+    @staticmethod
+    def from_JSON(json_obj):
+        img = Image(json_obj["name"])
+        for tag in json_obj["tags"]:
+            img.tags.append(Tag.from_JSON(tag))
+        return img
 #
 # Data wrapper for the Tag JSON data type
 # args:
@@ -102,6 +117,13 @@ class Tag(object):
             "class": self.clss
         }
         return jsondict
+
+    @staticmethod
+    def from_JSON(json_obj):
+        tag = Tag(json_obj["pos"][0], json_obj["pos"][1], json_obj["scale"], 
+                json_obj["class"])
+        return tag 
+
 #
 # This class handles the callbacks for the two different guis to modify our
 # tag data classes
@@ -187,6 +209,7 @@ class TagGui(threading.Thread):
         self.classes = {}
         self.class_count = 0
         self.max_images = None
+        self.entrytext = None
     
     def run(self):
         self.root = tk.Tk()
@@ -211,8 +234,10 @@ class TagGui(threading.Thread):
 
         self.root.mainloop()
 
-    def add_button(self, event=None):
+    def add_button(self, event=None, text=None):
         clss = self.entrytext.get()
+        if text is not None:
+            clss = text
         self.entrytext.set("")
         if self.classes.get(clss) == None and not clss.strip() == "":
             self.classes[clss] = self.class_count
@@ -222,7 +247,12 @@ class TagGui(threading.Thread):
             self.img_tagger.add_class(clss)
             self.change_class(class_count)
             self.class_count += 1
-            
+    
+    def threadsafe_add_button(self, text):
+        while self.entrytext == None:
+            pass
+        self.add_button(text=text)
+
     def change_class(self, i):
         self.img_tagger.change_class(i)
         self.labeltext.set(self.img_tagger.classes[i])
@@ -234,7 +264,7 @@ class TagGui(threading.Thread):
         self.root.quit()
 
 def main():
-    num_args = len(sys.argv)
+    num_args = len(sys.argv) 
     if num_args < 2:
         rel_path = "."
     else:
@@ -243,22 +273,32 @@ def main():
         if not os.path.exists(rel_path):
             print "directory doesnt exist"
             return
-    abspath = os.path.abspath(rel_path)
+    abspath = os.path.abspath(rel_path) 
     
-    build = False
     tagger = None
-    
+   
+    skip = 0
     if num_args > 2:
         width, height = [int(x) for x in sys.argv[2:]]
         tagger = Tagger(abspath, width, height) 
-    else:
+    elif os.path.isdir(abspath):
         tagger = Tagger(abspath)
-    
+    else:
+        #we are instead loading a json file and continuing to tag that dataset
+        with open(abspath, 'r') as json_file:
+            jsonstr = json_file.read()
+        tagger = Tagger.from_JSON(jsonstr)
+        abspath = tagger.path
+        skip = len(tagger.images)
     
     img_tagger = ImageTagger(tagger)
    
     #set up our gui
     app = TagGui(img_tagger)
+    
+    #if we are resuming we need to readd our buttons
+    for clss in tagger.classes:
+        app.threadsafe_add_button(text=clss)
 
     #loop through every file in the test dataset directory
     for root, _, files in os.walk(abspath):
@@ -268,6 +308,8 @@ def main():
         for f in files:
             #set the title so we can see how many images to go
             n += 1
+            if n <= skip:
+                continue
             app.set_title("Image "+str(n)+"/"+str(max_images))
             #make sure the file is a valid image format
             if f.endswith(accepted_exts):
