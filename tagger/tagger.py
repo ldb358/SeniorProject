@@ -36,6 +36,16 @@ class Tagger(object):
     def add_class(self, name):
         self.classes.append(name)
 
+    def __str__(self):
+        jsondict = {
+            "dataset": self.path,
+            "width": self.width,
+            "height": self.height,
+            "images": [x.jsonable() for x in self.images],
+            "classes": self.classes
+        }
+        return json.dumps(jsondict)
+
 
 #
 # this class is a data wrapper for the Image object in the JSON Api
@@ -51,6 +61,12 @@ class Image(object):
         self.tags.append(tag)        
         return self.tags[-1]
 
+    def jsonable(self):
+        jsondict = {
+            "name" : self.name,
+            "tags" : [x.jsonable() for x in self.tags]
+        }
+        return jsondict
 #
 # Data wrapper for the Tag JSON data type
 # args:
@@ -74,18 +90,18 @@ class Tag(object):
         self.y = y
     
     def change_scale(self, i):
-        self.scale = round(.1*i+.1, 1)
+        self.scale = round(.1*i+.5, 1)
     
     def change_class(self, i):
         self.clss = i
 
-    def __str__(self):
+    def jsonable(self):
         jsondict = { 
             "pos": [self.x, self.y],
             "scale": self.scale,
             "class": self.clss
         }
-        return json.dumps(jsondict);
+        return jsondict
 #
 # This class handles the callbacks for the two different guis to modify our
 # tag data classes
@@ -104,13 +120,15 @@ class ImageTagger(object):
         self.img = cvimg
         cv2.imshow("tagging", cvimg)
         self.tag = Tag(0, 0, 1, self.cur_class)
-        self.tagger.cur_image.add_tag(self.tag)
         cv2.createTrackbar("scale", "tagging", 9, 9, self.change_scale) 
         cv2.setMouseCallback("tagging", self.tag_image_click)
         #wait for a key press and get the char of the key what was pressed
         key = cv2.waitKey(0) & 255
         while key != ord(" "):
+            if key == 27:
+                return -1
             key = cv2.waitKey(0) & 255
+        self.tagger.cur_image.add_tag(self.tag)
         self.tag.change_class(self.cur_class)
 
     def change_scale(self, i): 
@@ -164,16 +182,17 @@ class TagGui(threading.Thread):
     def __init__(self, img_tagger):
         threading.Thread.__init__(self)
         self.img_tagger = img_tagger
+        self.daemon = True
         self.start()
         self.classes = {}
         self.class_count = 0
+        self.max_images = None
     
     def run(self):
         self.root = tk.Tk()
-
+        self.root.title("test")
         self.mainframe = tk.Frame(self.root)
         self.mainframe.grid(column=0, row=0, sticky="NWES")
-       
         curclasslabel = tk.Label(self.mainframe, text="Current Class:", justify="right")
         curclasslabel.grid(column=0, row=0, sticky="NWES")
 
@@ -184,16 +203,15 @@ class TagGui(threading.Thread):
         
         self.entrytext = tk.StringVar()
         classentry = tk.Entry(self.mainframe, textvariable=self.entrytext)
+        classentry.bind("<Return>", self.add_button)
         classentry.grid(column=0, row=1, columnspan=2, sticky="NWES")
 
         button = tk.Button(self.mainframe, text = 'Add Class', command=self.add_button)
         button.grid(column=0, row=2, columnspan=2, sticky="NWES")
 
-        self.mainframe.bind("<Return>", self.add_button)
-
         self.root.mainloop()
 
-    def add_button(self):
+    def add_button(self, event=None):
         clss = self.entrytext.get()
         self.entrytext.set("")
         if self.classes.get(clss) == None and not clss.strip() == "":
@@ -208,7 +226,12 @@ class TagGui(threading.Thread):
     def change_class(self, i):
         self.img_tagger.change_class(i)
         self.labeltext.set(self.img_tagger.classes[i])
+    
+    def set_title(self, title):
+        self.root.title(title)
 
+    def stop(self):
+        self.root.quit()
 
 def main():
     num_args = len(sys.argv)
@@ -226,23 +249,8 @@ def main():
     tagger = None
     
     if num_args > 2:
-        if sys.argv[2] == "build":
-            if num_args < 5:
-                print "To build a dataset you must provied a width and height for the test images"
-                return
-            width, height = [int(x) for x in sys.argv[3:]]
-
-            #get the path to the positve and negitive sample directories
-            pospath = os.path.join(abspath, "pos")
-            negpath = os.path.join(abspath, "neg")
-            try:
-                #create the pos and negitive dirs     
-                os.mkdir(pospath)
-                os.mkdir(negpath)
-            except OSError:
-                print "pos and neg already exited, we will populate these"
-            build = True
-            tagger = Tagger(abspath, width, height, pospath, negpath) 
+        width, height = [int(x) for x in sys.argv[2:]]
+        tagger = Tagger(abspath, width, height) 
     else:
         tagger = Tagger(abspath)
     
@@ -255,7 +263,12 @@ def main():
     #loop through every file in the test dataset directory
     for root, _, files in os.walk(abspath):
         #for each file
+        max_images = len(files) 
+        n = 0
         for f in files:
+            #set the title so we can see how many images to go
+            n += 1
+            app.set_title("Image "+str(n)+"/"+str(max_images))
             #make sure the file is a valid image format
             if f.endswith(accepted_exts):
                 fullpath = os.path.join(root, f)
@@ -263,13 +276,12 @@ def main():
                 img = cv2.imread(fullpath)
                 
                 tagger.add_image(fullpath)
-                img_tagger.tag_image(img)
-                for i in tagger.images:
-                    for x in i.tags:
-                        print str(x)
+                if img_tagger.tag_image(img) == -1:
+                    break
                 #display the image
                 cv2.waitKey(1)
-
+    app.stop()
+    print str(tagger)
 
 if __name__ == "__main__":
     main()
