@@ -47,23 +47,31 @@ def main():
     #paths to pos and neg directories
     posdir = os.path.join(abspath, json_obj["classes"][index]+"_pos")
     negdir = os.path.join(abspath, json_obj["classes"][index]+"_neg")
+    imagelist = os.path.join(abspath, json_obj["classes"][index]+".txt")
     if os.path.exists(posdir) or os.path.exists(negdir):
         print "dataset already created for this class"
         return
     os.mkdir(posdir)
     os.mkdir(negdir)
 
+    f = open(imagelist, "w");
+
     width = json_obj["width"]
     height = json_obj["height"]
+    pos_images = ""
+    neg_images = ""
     for x, image in enumerate(json_obj["images"]):
         img = cv2.imread(image["name"])
         for z, tag in enumerate(image["tags"]):
             x, y = tag["pos"]
             scale = tag["scale"]
+            imagename = "img"+str(x)+"tag"+str(z)+".png"
             if tag["class"] == index:
-                filename = os.path.join(posdir, "img"+str(x)+"tag"+str(z)+".png")
+                filename = os.path.join(posdir, imagename)
+                pos_images += filename + " "
             else:
-                filename = os.path.join(negdir, "img"+str(x)+"tag"+str(z)+".png")
+                filename = os.path.join(negdir, imagename)
+                neg_images += filename + " "
             size = img.shape
             x1 = max(min(size[1]-1, x), 0)
             x2 = max(min(size[1]-1, x+scale*width), 0)
@@ -73,5 +81,8 @@ def main():
             scaledimg = cv2.resize(cropedimg, (width, height), interpolation=cv2.INTER_LINEAR)
             cv2.imwrite(filename, scaledimg)
 
+    f.write(pos_images+"\n")
+    f.write(neg_images)
+    f.close()
 if __name__ == "__main__":
     main()
