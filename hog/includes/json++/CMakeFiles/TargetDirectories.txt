@@ -1,0 +1,2 @@
+/home/brenemal/spws/hog/includes/json++/CMakeFiles/json.dir
+/home/brenemal/spws/hog/includes/json++/CMakeFiles/test.dir

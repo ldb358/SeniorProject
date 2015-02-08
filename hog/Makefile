@@ -1,19 +1,23 @@
-svmlightdir = ~/svmlight/
-svmlight = $(svmlightdir)svm_learn.o $(svmlightdir)svm_common.o $(svmlightdir)svm_hideo.o
+jsondir=includes/json++
+includes=includes/FileReader.o
+libs=-L $(jsondir)/ -l json
 default: trainer
 
 
-trainer: trainer.cpp FileReader.o
-	g++ -c -o trainer.o trainer.cpp
-	g++ trainer.o FileReader.o -o trainer `pkg-config --cflags --libs opencv`
+trainer: trainer.cpp $(includes)
+	g++ -std=c++11 -c -o trainer.o trainer.cpp
+	g++ trainer.o $(includes) $(libs) -Wall -o trainer `pkg-config --cflags --libs opencv`
 
-FileReader.o: FileReader.cpp
-	g++ -c FileReader.cpp -o FileReader.o
+includes/FileReader.o: includes/FileReader.cpp
+	g++ -c includes/FileReader.cpp -o includes/FileReader.o
+
+$(jsondir)/libjson.a:
+	make -f $(jsondir)/Makefile
 
 run: trainer
 	touch puck.model
 	rm puck.model
-	./trainer ~/test_images/rover/puck.txt puck.model
+	./trainer tagger.json ~/test_images/rover/puck.txt puck.model
 
 clean:
 	rm *.o trainer includes/*.o

@@ -3,6 +3,12 @@
 using namespace cv;
 using namespace std;
 
+/*
+ * DsReader: Reads a json data set file created by tagger
+ *
+ *
+ */
+
 void calculateFeaturesFromInput(char* imageFilename, vector<float>& featureVector,
         HOGDescriptor& hog) 
 {
@@ -15,7 +21,7 @@ void calculateFeaturesFromInput(char* imageFilename, vector<float>& featureVecto
         }
         if (image.cols != hog.winSize.width || image.rows != hog.winSize.height) {
             featureVector.clear();
-            cout << imageFilename << " Couldn't use for trainging since the dimensions are wrong" << endl;
+            cout << imageFilename << " Couldn't use for training since the dimensions are wrong" << endl;
             return;
         }
         hog.compute(image, featureVector); 
@@ -37,19 +43,18 @@ void flv2mat(vector<float> values, Mat &cp){
 
 
 int main(int argc, char**argv){
-    if(argc < 3){
-        cout << "You need to provide file contain a list of image to use for training, and the name of the file to use as a model" 
+    if(argc < 4){
+        cout << "usage: [json file for tags] [file with list of images for training ] [file to save model to]"
             << endl;
         return -1;
     }
-    FileReader file(argv[1]);
+    FileReader file(argv[2]);
     if(!file.is_open()){
         cout << "File couldn't be opened... exiting.";
         return 1;
     }
     // save our descriptors in the object(since we are only calculating one at a time
     HOGDescriptor desc;
-    string tmpf = "model.temp";
     //output file to save the model to
     vector< vector<float> > training_data; 
     vector<float> labels;

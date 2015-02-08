@@ -8,6 +8,7 @@
 #include<opencv2/highgui/highgui.hpp>
 #include<opencv2/ml/ml.hpp>
 #include "includes/FileReader.h"
+#include "includes/json++/json.hh"
 
 using namespace std;
 using namespace cv;
@@ -26,3 +27,17 @@ class SampleDetector{
         struct matches *scan_row(Mat &img, int row, int step_size);
 };
 
+class DsReader{
+    private:
+        ifstream jsonfile;
+        int current;
+        Value root;
+        string data_path;
+        int tag_width;
+        int tag_height; 
+    public:
+        DsReader(char* filename);
+        int has_next();
+        Object next();
+        Array get_tags();
+};
