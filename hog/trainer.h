@@ -1,4 +1,3 @@
-using namespace std;
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -7,21 +6,23 @@ using namespace std;
 #include<opencv2/imgproc/imgproc.hpp>
 #include<opencv2/gpu/gpu.hpp>
 #include<opencv2/highgui/highgui.hpp>
+#include<opencv2/ml/ml.hpp>
+#include "includes/FileReader.h"
 
-class FileReader{
-    private:
-        int line_count;
-        string line;
-        int char_count;
-        int image_count;
-        char *img;
-        ifstream myfile;
-        char *directory;
-        void loadline();
-    public:
-        FileReader(char *filename);
-        char *nextimg();
-        int is_open();
-        int has_next();
-        int is_pos();
+using namespace std;
+using namespace cv;
+
+struct matches{
+    int count;
+    vector< int[2] > boxes; //a vector of all of the matches where [0] = row  and [1] = col
 };
+
+class SampleDetector{
+    private:
+        CvSVM *svm;
+
+    public:
+        void add_match(int row, int col);
+        struct matches *scan_row(Mat &img, int row, int step_size);
+};
+
