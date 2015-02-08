@@ -5,8 +5,8 @@ default: trainer
 
 
 trainer: trainer.cpp $(includes)
-	g++ -std=c++11 -c -o trainer.o trainer.cpp
-	g++ trainer.o $(includes) $(libs) -Wall -o trainer `pkg-config --cflags --libs opencv`
+	g++ -g -std=c++11 -c -o trainer.o trainer.cpp
+	g++ -g trainer.o $(includes) $(libs) -Wall -o trainer `pkg-config --cflags --libs opencv`
 
 includes/FileReader.o: includes/FileReader.cpp
 	g++ -c includes/FileReader.cpp -o includes/FileReader.o
