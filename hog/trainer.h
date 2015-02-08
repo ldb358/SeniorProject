@@ -12,20 +12,40 @@
 
 using namespace std;
 using namespace cv;
+using namespace JSON;
 
-struct matches{
-    int count;
-    vector< int[2] > boxes; //a vector of all of the matches where [0] = row  and [1] = col
+struct SdPos{
+    int x;
+    int y;
 };
 
 class SampleDetector{
     private:
         CvSVM *svm;
-
+        vector<struct SdPos> found;
     public:
-        void add_match(int row, int col);
-        struct matches *scan_row(Mat &img, int row, int step_size);
+        void add_pos(int row, int col);
+        void scan_row(Mat &img, int row, int step_size);
+        vector<struct SdPos> get_matches();
 };
+
+
+struct DsImage{
+    char *path;
+    vector<struct DsTag> tags;
+};
+
+struct DsTag{
+    vector<struct DsPos> pos;
+    double scale;
+    int clss;
+};
+
+struct DsPos{
+    int x;
+    int y;
+};
+
 
 class DsReader{
     private:
@@ -33,11 +53,16 @@ class DsReader{
         int current;
         Value root;
         string data_path;
-        int tag_width;
-        int tag_height; 
+        int twidth;
+        int theight; 
+        char *path_buffer;
+        int status;
+        vector<string> classes;
     public:
         DsReader(char* filename);
         int has_next();
-        Object next();
-        Array get_tags();
+        int data_exists();
+        void next(struct DsImage &imgdata);
+        int tag_width(){ return twidth; }
+        int tag_height(){ return theight; }
 };
