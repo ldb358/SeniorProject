@@ -1,5 +1,5 @@
-jsondir=includes/json++
-includes=includes/FileReader.o includes/SampleDetector.o includes/helper.o includes/DsReader.o
+jsondir=../dataset_reader/json++
+includes=includes/FileReader.o includes/SampleDetector.o includes/helper.o ../dataset_reader/DsReader.o
 libs=-L $(jsondir)/ -l json
 default: trainer
 
@@ -11,8 +11,8 @@ trainer: trainer.cpp $(includes)
 includes/FileReader.o: includes/FileReader.cpp
 	g++ -c includes/FileReader.cpp -o includes/FileReader.o
 
-includes/DsReader.o: includes/DsReader.cpp
-	g++ -std=c++11 -c includes/DsReader.cpp -o includes/DsReader.o
+../dataset_reader/sReader.o: ../dataset_reader/DsReader.cpp
+	g++ -std=c++11 -c ../dataset_reader/DsReader.cpp -o ../dataset_reader/DsReader.o
 
 includes/SampleDetector.o: includes/SampleDetector.cpp
 	g++ -std=c++11 -c includes/SampleDetector.cpp -o includes/SampleDetector.o
@@ -24,10 +24,15 @@ includes/helper.o: includes/helper.cpp
 $(jsondir)/libjson.a:
 	make -f $(jsondir)/Makefile
 
-run: trainer
-	touch puck.model
-	rm puck.model
+rover: trainer
+	touch puck.yaml
+	rm puck.yaml
 	./trainer tagger.json ~/test_images/rover/puck.txt puck.yaml
+
+stop: trainer
+	touch stopsign.yaml
+	rm stopsign.yaml
+	./trainer ~/test_images/400x300/tags_final.json ~/test_images/400x300/stopsign.txt stopsign.yaml
 
 clean:
 	rm *.o trainer includes/*.o

@@ -22,6 +22,6 @@ int calculate_features_from_input(Mat &image, vector<float>& featureVector,
 
 void flv2mat(vector<float> &values, Mat &cp);
 
-int get_overlap(int x1, int y1, int x2, int y2, int width, int height);
+int get_overlap(int x1, int y1, int x2, int y2, int width, int height, double scale);
 
 #endif

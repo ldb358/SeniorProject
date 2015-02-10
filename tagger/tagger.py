@@ -101,8 +101,8 @@ class Tag(object):
         self.clss = clss
 
     def move(self, x, y, scale=1):
-        self.x = x
-        self.y = y
+        self.x = max(0, x)
+        self.y = max(0, y)
     
     def change_scale(self, i):
         self.scale = round(.1*i+.5, 1)
@@ -112,7 +112,7 @@ class Tag(object):
 
     def jsonable(self):
         jsondict = { 
-            "pos": [self.x, self.y],
+            "pos": [self.y, self.x], #invert it since python is backwards
             "scale": self.scale,
             "class": self.clss
         }
@@ -164,7 +164,10 @@ class ImageTagger(object):
         
         dw = int(self.tagger.width*self.tag.scale)-width
         dh = int(self.tagger.height*self.tag.scale)-height
-        self.tag.move(int(self.tag.x-dw/2), int(self.tag.y-dh/2))
+        size = self.img.shape
+        x = max(min(int(self.tag.x-dw/2), size[1]-width-1), 0)
+        y = max(min(int(self.tag.y-dh/2), size[0]-height-1), 0)
+        self.tag.move(x, y)
         cvimg = self.img.copy()
         self.draw_box(cvimg)
         cv2.imshow("tagging", cvimg)
@@ -175,7 +178,10 @@ class ImageTagger(object):
             if self.cur_class > -1:
                 width = int(self.tagger.width*self.tag.scale)
                 height = int(self.tagger.height*self.tag.scale)
-                self.tag.move(x-(width/2), y-(height/2))
+                size = self.img.shape
+                x = max(min(x-(width/2), size[1]-width-1), 0)
+                y = max(min(y-(height/2), size[0]-height-1), 0)
+                self.tag.move(x, y)
                 self.draw_box(cvimg)
             else:
                 cv2.putText(cvimg, "You must select an object type.", (x, y), cv2.FONT_HERSHEY_PLAIN, 1, 9)
@@ -323,6 +329,7 @@ def main():
                     break
                 #display the image
                 cv2.waitKey(1)
+        break
     app.stop()
     print str(tagger)
 

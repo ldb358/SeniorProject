@@ -9,7 +9,7 @@
 #include<opencv2/ml/ml.hpp>
 #include "includes/FileReader.h"
 #include "includes/SampleDetector.h"
-#include "includes/DsReader.h"
+#include "../dataset_reader/DsReader.h"
 #include "includes/helper.h"
 using namespace std;
 using namespace cv;

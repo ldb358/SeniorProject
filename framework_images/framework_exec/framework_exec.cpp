@@ -116,7 +116,7 @@ int main(int argc, char *argv[]) {
 	cout << "Image processing has completed. Will render image.\n" << endl;
 	imshow("opencvtest", imdata);
 #endif
-
+    int status = istruct->sign;
 	// results of image processing
 	istruct->sign ? cout << "This is a stop sign.\n" << endl : cout << "This is not a stop sign.\n" << endl;
 
@@ -131,5 +131,5 @@ int main(int argc, char *argv[]) {
 		exit(EXIT_FAILURE);
 	}
 
-	return 0;
+	return status;
 }

@@ -61,9 +61,10 @@ def main():
     pos_images = ""
     neg_images = ""
     for x, image in enumerate(json_obj["images"]):
+        print image["name"]
         img = cv2.imread(image["name"])
         for z, tag in enumerate(image["tags"]):
-            x, y = tag["pos"]
+            y, x = tag["pos"]
             scale = tag["scale"]
             imagename = "img"+str(x)+"tag"+str(z)+".png"
             if tag["class"] == index:
@@ -77,6 +78,8 @@ def main():
             x2 = max(min(size[1]-1, x+scale*width), 0)
             y1 = max(min(size[0]-1, y), 0)
             y2 = max(min(size[0]-1, y+scale*height), 0)
+            if y >= size[0]-1:
+                continue
             cropedimg = img[y1:y2, x1:x2]
             scaledimg = cv2.resize(cropedimg, (width, height), interpolation=cv2.INTER_LINEAR)
             cv2.imwrite(filename, scaledimg)

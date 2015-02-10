@@ -16,8 +16,8 @@ int main(int argc, char**argv){
     }
 
     //arguments
-    int step_size = 10;
-    string type = "puck";
+    int step_size = 8;
+    string type = "stopsign";
 
     // save our descriptors in the object(since we are only calculating one at a time
     HOGDescriptor desc;
@@ -90,6 +90,7 @@ int main(int argc, char**argv){
         vector<struct SdMatch> matches = detect.get_matches();
         
         int tag_area = dataset.tag_width()*dataset.tag_height();    
+        int pos_img = 0;
         for(int i=0; i < matches.size(); ++i){ 
             int ispos = false;
             for(int n=0; n < img_data.tags.size(); ++n){
@@ -101,11 +102,22 @@ int main(int argc, char**argv){
                 //get the overlap of the found object and the tag
                 int overlap = get_overlap(matches[i].x, matches[i].y,
                                           img_data.tags[n].pos.x, img_data.tags[n].pos.y, 
-                                          dataset.tag_width(), dataset.tag_height());
-
+                                          dataset.tag_width(), dataset.tag_height(),
+                                          img_data.tags[n].scale);
+                
                 float ratio = ((float)overlap)/tag_area;
+                //cout << matches[i].x+dataset.tag_width() << ":" << matches[i].y + dataset.tag_height() << ":" << img.rows << endl;
+                //Mat ma(img, Rect(matches[i].x, matches[i].y, dataset.tag_width(), dataset.tag_height())); 
+                //imshow("test2", ma);
+                //cout << ratio << endl;
+                //Mat block(img, Rect(img_data.tags[n].pos.x, img_data.tags[n].pos.y, 
+                //                dataset.tag_width()*img_data.tags[n].scale, dataset.tag_height()*img_data.tags[n].scale));
+                //imshow("test", block);
+                //waitKey(0);
+
                 if(ratio > .3){
                     ispos = true;
+                    pos_img = 1;
                 }
             }
             if(ispos){
@@ -117,7 +129,7 @@ int main(int argc, char**argv){
             }
         }
         detect.clear();
-        cout << "image " << cur << "/" << dataset.size() << endl;
+        cout << "image " << cur << "/" << dataset.size() << " Status:" << pos_img <<  endl;
     }
     //print the pos and neg counts and percentages
     cout << positive_count << " Positve, " << negative_count << " Negative " << ((float)positive_count/negative_count) << "+/-" << endl;
@@ -125,6 +137,7 @@ int main(int argc, char**argv){
     //convert training vector to a mat
     training_mat.release();
     training_label.release();
+    cout << "going from vector to mat" << endl;
     Mat retraining_mat(training_data.size(), training_data[0].size(), CV_32FC1);
     for(int i=0; i < retraining_mat.rows; ++i){
         for(int j=0; j < retraining_mat.cols; ++j){
@@ -134,6 +147,7 @@ int main(int argc, char**argv){
     //convert the label vector to a mat
     Mat retraining_label(labels.size(), 1, CV_32FC1);
     flv2mat(labels, retraining_label);
+    cout << "retraining" << endl;
     //retrain with the false positives
     svm->train(retraining_mat, retraining_label, Mat(), Mat(), params);
 
@@ -166,7 +180,8 @@ int main(int argc, char**argv){
                 //get the overlap of the found object and the tag
                 int overlap = get_overlap(matches[i].x, matches[i].y,
                                           img_data.tags[n].pos.x, img_data.tags[n].pos.y, 
-                                          dataset.tag_width(), dataset.tag_height());
+                                          dataset.tag_width(), dataset.tag_height(),
+                                          img_data.tags[n].scale);
 
                 float ratio = ((float)overlap)/tag_area;
                 if(ratio > .3){

@@ -43,6 +43,6 @@ int main(int argc, char *argv[]) {
 #ifdef RENDER
 	waitKey(0);
 #endif 
-	return 0;
+	return sign;
 }
 

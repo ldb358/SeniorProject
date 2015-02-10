@@ -62,6 +62,7 @@ void SampleDetector::add_pos(int row, int col, vector<float> &desc){
 void SampleDetector::scan_row(Mat &img, HOGDescriptor& hog, int row, int step_size){
     vector<float> vfeatures;
     for(int c=0, max_col=img.cols-tag_width; c < max_col; c+=step_size){ 
+        //extract the current block the size of out descriptor
         Mat block(img, Rect(c, row, tag_width, tag_height)); 
         vfeatures.clear(); 
         int s = calculate_features_from_input(block, vfeatures, hog); 

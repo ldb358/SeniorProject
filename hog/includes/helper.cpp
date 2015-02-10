@@ -57,9 +57,9 @@ void flv2mat(vector<float> &values, Mat &cp){
 /*
  * Calculates the overlap of two rectangles
  */
-int get_overlap(int x1, int y1, int x2, int y2, int width, int height){
-    int x22 = x2+width;
-    int y22 = y2+height;
+int get_overlap(int x1, int y1, int x2, int y2, int width, int height, double scale){
+    int x22 = x2+width*scale;
+    int y22 = y2+height*scale;
     int xover = max(0, min(x1+width, x22) - max(x1,x2));
     int yover = max(0, min(y1+height,y22) - max(y1, y2));
     return xover*yover;
