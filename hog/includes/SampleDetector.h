@@ -42,6 +42,7 @@ class SampleDetector{
         int init_row;
         pthread_mutex_t mutex_row;
         pthread_mutex_t write_match;
+        pthread_mutex_t working_dec;
     public: 
         SampleDetector(CvSVM *psvm, int width, int height);
         static void *start_thread(void *arg);

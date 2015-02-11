@@ -11,6 +11,7 @@ SampleDetector::SampleDetector(CvSVM *psvm, int width, int height){
     running_threads = 0;
     pthread_mutex_init(&mutex_row, NULL);
     pthread_mutex_init(&write_match, NULL);
+    pthread_mutex_init(&working_dec, NULL);
     pthread_mutex_lock(&mutex_row);
     tag_width = width;
     tag_height = height;
@@ -35,9 +36,13 @@ void *SampleDetector::thread_loop(){
         }
         struct SdRow data = row_data;
         init_row = 0;
-        threads_working += 1;
+        pthread_mutex_lock(&working_dec);
+        threads_working++;
+        pthread_mutex_unlock(&working_dec);
         scan_row(thread_img, *data.hog, data.row, data.step_size); 
-        threads_working -= 1;
+        pthread_mutex_lock(&working_dec);
+        threads_working--;
+        pthread_mutex_unlock(&working_dec);
     }
     running_threads--;
     return NULL;

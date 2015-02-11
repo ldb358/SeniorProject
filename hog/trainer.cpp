@@ -16,8 +16,8 @@ int main(int argc, char**argv){
     }
 
     //arguments
-    int step_size = 8;
-    string type = "stopsign";
+    int step_size = STEP_SIZE;
+    string type = CLASS;
 
     // save our descriptors in the object(since we are only calculating one at a time
     HOGDescriptor desc;
@@ -51,6 +51,7 @@ int main(int argc, char**argv){
     params.svm_type    = CvSVM::C_SVC;
     params.kernel_type = CvSVM::LINEAR;
     params.term_crit   = cvTermCriteria(CV_TERMCRIT_ITER, 100, 1e-6);
+    params.C = 10e10;
     
     CvSVM *svm = new CvSVM;
     svm->train(training_mat, training_label, Mat(), Mat(), params);
@@ -106,15 +107,6 @@ int main(int argc, char**argv){
                                           img_data.tags[n].scale);
                 
                 float ratio = ((float)overlap)/tag_area;
-                //cout << matches[i].x+dataset.tag_width() << ":" << matches[i].y + dataset.tag_height() << ":" << img.rows << endl;
-                //Mat ma(img, Rect(matches[i].x, matches[i].y, dataset.tag_width(), dataset.tag_height())); 
-                //imshow("test2", ma);
-                //cout << ratio << endl;
-                //Mat block(img, Rect(img_data.tags[n].pos.x, img_data.tags[n].pos.y, 
-                //                dataset.tag_width()*img_data.tags[n].scale, dataset.tag_height()*img_data.tags[n].scale));
-                //imshow("test", block);
-                //waitKey(0);
-
                 if(ratio > .3){
                     ispos = true;
                     pos_img = 1;

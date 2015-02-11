@@ -1,12 +1,21 @@
 jsondir=../dataset_reader/json++
 includes=includes/FileReader.o includes/SampleDetector.o includes/helper.o ../dataset_reader/DsReader.o
+detect_includes=includes/SampleDetector.o includes/helper.o 
 libs=-L $(jsondir)/ -l json
+opencv=`pkg-config --cflags --libs opencv`
 default: trainer
 
 
 trainer: trainer.cpp $(includes)
 	g++ -g -pthread -std=c++11 -c -o trainer.o trainer.cpp
-	g++ -g trainer.o $(includes) $(libs) -Wall -o trainer `pkg-config --cflags --libs opencv`
+	g++ -g trainer.o $(includes) $(libs) -Wall -o trainer $(opencv) 
+
+libhogdetect.so: detector.cpp $(detect_includes)
+	g++ -g -pthread -std=c++11 -fPIC -c -o detector.o detector.cpp 
+	g++ -std=c++11 -c -fPIC includes/SampleDetector.cpp -o includes/SampleDetector.o
+	g++ -fPIC -c includes/helper.cpp -o includes/helper.o
+	g++ -shared -o libhogdetect.so detector.o $(detect_includes) $(opencv)
+
 
 includes/FileReader.o: includes/FileReader.cpp
 	g++ -c includes/FileReader.cpp -o includes/FileReader.o
