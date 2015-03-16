@@ -9,5 +9,9 @@ trainer: trainer.cpp
 	g++ -g -std=c++11 -c -o trainer.o trainer.cpp
 	g++ -g trainer.o $(includes) $(libs) -Wall -o trainer $(opencv)
 
+
+detect: detect.cpp
+	g++ -g -std=c++11 -c -o detect.o detect.cpp
+
 train: trainer
-	./trainer tags_final.json bow_model.yaml
+	./trainer tags_final.json bow_model.yaml bow.vocab

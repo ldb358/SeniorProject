@@ -3,7 +3,8 @@
 using namespace cv;
 using namespace std;
 
-Ptr<FeatureDetector> detector = new SurfFeatureDetector(20);
+//Ptr<FeatureDetector> detector = new SurfFeatureDetector(20);
+Ptr<FeatureDetector> detector = FeatureDetector::create("FAST");
 Ptr<DescriptorExtractor> desc_extr = DescriptorExtractor::create("SURF");
 
 void computeFeaturesWithBOW(DsReader &dataset, Mat &training_data, Mat &labels, 
@@ -44,8 +45,10 @@ void computeFeaturesWithBOW(DsReader &dataset, Mat &training_data, Mat &labels,
 			//detect the surf keypoints
 			detector->detect(subimg, keypoints);
 			cout << "detected"; 	
+			cout << "cannot extract..." << endl;
 			//extract BOW descriptos
 			extractor.compute(img, keypoints, features);
+			cout << "Or can we..." << endl;
 			cout << " -> Extracted OK";	
 			string cls = dataset.get_class(img_data.tags[i].clss);
 			//set the label based on the class
@@ -59,8 +62,8 @@ void computeFeaturesWithBOW(DsReader &dataset, Mat &training_data, Mat &labels,
 
 
 int main(int argc, char** argv){
-	if(argc < 3){
-        cout << "usage: [json file for tags] [file to save model to] [file to save vocab to]"
+	if(argc < 2){
+        cout << "usage: [json file for tags] [file to save model to]"
             << endl;
         return -1;
     }
@@ -136,14 +139,15 @@ int main(int argc, char** argv){
 	int cluster_count = 1000;
 	//create a trainer with 1000 clusters
 	BOWKMeansTrainer bow_trainer(cluster_count);
+	
+	Mat f32td;
+	training_descriptors.convertTo(f32td, CV_32F);
 
 	//add our training data
-	bow_trainer.add(training_descriptors);
+	//bow_trainer.add(training_descriptors);
+	bow_trainer.add(f32td);
 	//run the clustering
 	Mat vocab = bow_trainer.cluster();
-	FileStorage fs(argv[3], FileStorage::WRITE);
-	fs << "vocab" << vocab;
-	fs.release();
 
 	cout << "Step 2: train the svm" << endl;
 	
