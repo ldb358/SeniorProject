@@ -33,8 +33,7 @@ int main(int argc, char**argv){
         //fork and get status
         int pid = fork();
         if(pid == 0){
-            //execl(argv[2], argv[2], img_data.path, NULL); 
-            return 0;
+            execl(argv[3], argv[3], img_data.path, NULL); 
         }else if(pid < 0){
             cout << "error: could not fork" << endl;
             return 0;

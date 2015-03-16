@@ -35,10 +35,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/brenemal/spws/hog/includes/json++
+CMAKE_SOURCE_DIR = /home/brenemal/spws/dataset_reader/json++
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/brenemal/spws/hog/includes/json++
+CMAKE_BINARY_DIR = /home/brenemal/spws/dataset_reader/json++
 
 # Include any dependencies generated for this target.
 include CMakeFiles/test.dir/depend.make
@@ -51,17 +51,17 @@ include CMakeFiles/test.dir/flags.make
 
 CMakeFiles/test.dir/test.cc.o: CMakeFiles/test.dir/flags.make
 CMakeFiles/test.dir/test.cc.o: test.cc
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/brenemal/spws/hog/includes/json++/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/brenemal/spws/dataset_reader/json++/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/test.dir/test.cc.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/test.dir/test.cc.o -c /home/brenemal/spws/hog/includes/json++/test.cc
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/test.dir/test.cc.o -c /home/brenemal/spws/dataset_reader/json++/test.cc
 
 CMakeFiles/test.dir/test.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test.dir/test.cc.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/brenemal/spws/hog/includes/json++/test.cc > CMakeFiles/test.dir/test.cc.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/brenemal/spws/dataset_reader/json++/test.cc > CMakeFiles/test.dir/test.cc.i
 
 CMakeFiles/test.dir/test.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test.dir/test.cc.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/brenemal/spws/hog/includes/json++/test.cc -o CMakeFiles/test.dir/test.cc.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/brenemal/spws/dataset_reader/json++/test.cc -o CMakeFiles/test.dir/test.cc.s
 
 CMakeFiles/test.dir/test.cc.o.requires:
 .PHONY : CMakeFiles/test.dir/test.cc.o.requires
@@ -98,6 +98,6 @@ CMakeFiles/test.dir/clean:
 .PHONY : CMakeFiles/test.dir/clean
 
 CMakeFiles/test.dir/depend:
-	cd /home/brenemal/spws/hog/includes/json++ && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/brenemal/spws/hog/includes/json++ /home/brenemal/spws/hog/includes/json++ /home/brenemal/spws/hog/includes/json++ /home/brenemal/spws/hog/includes/json++ /home/brenemal/spws/hog/includes/json++/CMakeFiles/test.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/brenemal/spws/dataset_reader/json++ && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/brenemal/spws/dataset_reader/json++ /home/brenemal/spws/dataset_reader/json++ /home/brenemal/spws/dataset_reader/json++ /home/brenemal/spws/dataset_reader/json++ /home/brenemal/spws/dataset_reader/json++/CMakeFiles/test.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/test.dir/depend
 

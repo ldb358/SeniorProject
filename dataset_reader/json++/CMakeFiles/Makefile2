@@ -47,10 +47,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/brenemal/spws/hog/includes/json++
+CMAKE_SOURCE_DIR = /home/brenemal/spws/dataset_reader/json++
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/brenemal/spws/hog/includes/json++
+CMAKE_BINARY_DIR = /home/brenemal/spws/dataset_reader/json++
 
 #=============================================================================
 # Target rules for target CMakeFiles/json.dir
@@ -59,7 +59,7 @@ CMAKE_BINARY_DIR = /home/brenemal/spws/hog/includes/json++
 CMakeFiles/json.dir/all:
 	$(MAKE) -f CMakeFiles/json.dir/build.make CMakeFiles/json.dir/depend
 	$(MAKE) -f CMakeFiles/json.dir/build.make CMakeFiles/json.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/brenemal/spws/hog/includes/json++/CMakeFiles  1 2 3 4 5
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/brenemal/spws/dataset_reader/json++/CMakeFiles  1 2 3 4 5
 	@echo "Built target json"
 .PHONY : CMakeFiles/json.dir/all
 
@@ -69,9 +69,9 @@ all: CMakeFiles/json.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/json.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/brenemal/spws/hog/includes/json++/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/brenemal/spws/dataset_reader/json++/CMakeFiles 5
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/json.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/brenemal/spws/hog/includes/json++/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/brenemal/spws/dataset_reader/json++/CMakeFiles 0
 .PHONY : CMakeFiles/json.dir/rule
 
 # Convenience name for target.
@@ -94,7 +94,7 @@ clean: CMakeFiles/json.dir/clean
 CMakeFiles/test.dir/all: CMakeFiles/json.dir/all
 	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/depend
 	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/brenemal/spws/hog/includes/json++/CMakeFiles  6
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/brenemal/spws/dataset_reader/json++/CMakeFiles  6
 	@echo "Built target test"
 .PHONY : CMakeFiles/test.dir/all
 
@@ -104,9 +104,9 @@ all: CMakeFiles/test.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/test.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/brenemal/spws/hog/includes/json++/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/brenemal/spws/dataset_reader/json++/CMakeFiles 6
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/test.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/brenemal/spws/hog/includes/json++/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/brenemal/spws/dataset_reader/json++/CMakeFiles 0
 .PHONY : CMakeFiles/test.dir/rule
 
 # Convenience name for target.

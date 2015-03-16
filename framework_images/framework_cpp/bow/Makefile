@@ -14,4 +14,4 @@ detect: detect.cpp
 	g++ -g -std=c++11 -c -o detect.o detect.cpp
 
 train: trainer
-	./trainer tags_final.json bow_model.yaml bow.vocab
+	./trainer tags_final.json bow_model.yaml bow.yaml

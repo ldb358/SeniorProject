@@ -6,14 +6,7 @@ using namespace std;
 Ptr<FeatureDetector> detector = new SurfFeatureDetector(20);
 Ptr<DescriptorExtractor> desc_extr = DescriptorExtractor::create("SURF");
 
-
-int main(int argc, char** argv){
-	if(argc < 2){
-        cout << "usage: [json file for tags] [file to save model to]"
-            << endl;
-        return -1;
-    }
-	
+int processImage(Mat img){	
 	cv::initModule_nonfree();
 
 	//keypoint matcher
@@ -25,22 +18,19 @@ int main(int argc, char** argv){
 	int cluster_count = 1000;
 	//read our clustered data from a file
 	Mat vocab;
-    FileStorage fs(argv[3], FileStorage::READ);
+    FileStorage fs(VOCAB, FileStorage::READ);
     fs["vocab"] >> vocab;
     fs.release();
-
-	extractor.setVocabulary(vocab);
+	extractor.setVocabulary(vocab);	
 	
 	CvSVM svm;
-    svm.load(argv[2]);	
+    svm.load(MODEL);	
     
-    Mat img = imread(argv[1], 0);
 	Mat descriptors;
     vector<KeyPoint> keypoints;
 
     //detect the surf keypoints
     detector->detect(img, keypoints);
-    
     //extract the relevent keypoint clusters(usually k-means)
     extractor.compute(img, keypoints, descriptors);
     //get the svm prediction

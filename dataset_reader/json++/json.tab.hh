@@ -30,8 +30,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_YY_HOME_BRENEMAL_SPWS_HOG_INCLUDES_JSON_JSON_TAB_HH_INCLUDED
-# define YY_YY_HOME_BRENEMAL_SPWS_HOG_INCLUDES_JSON_JSON_TAB_HH_INCLUDED
+#ifndef YY_YY_HOME_BRENEMAL_SPWS_DATASET_READER_JSON_JSON_TAB_HH_INCLUDED
+# define YY_YY_HOME_BRENEMAL_SPWS_DATASET_READER_JSON_JSON_TAB_HH_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -40,10 +40,10 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 25 "/home/brenemal/spws/hog/includes/json++/json.y" /* yacc.c:1909  */
+#line 25 "/home/brenemal/spws/dataset_reader/json++/json.y" /* yacc.c:1909  */
  #include "json_st.hh" 
 
-#line 47 "/home/brenemal/spws/hog/includes/json++/json.tab.hh" /* yacc.c:1909  */
+#line 47 "/home/brenemal/spws/dataset_reader/json++/json.tab.hh" /* yacc.c:1909  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -70,7 +70,7 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 28 "/home/brenemal/spws/hog/includes/json++/json.y" /* yacc.c:1909  */
+#line 28 "/home/brenemal/spws/dataset_reader/json++/json.y" /* yacc.c:1909  */
 
     // "Pure" types
     long long int int_v;
@@ -84,7 +84,7 @@ union YYSTYPE
     JSON::Array* array_p;
     JSON::Value* value_p;
 
-#line 88 "/home/brenemal/spws/hog/includes/json++/json.tab.hh" /* yacc.c:1909  */
+#line 88 "/home/brenemal/spws/dataset_reader/json++/json.tab.hh" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
@@ -95,4 +95,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_HOME_BRENEMAL_SPWS_HOG_INCLUDES_JSON_JSON_TAB_HH_INCLUDED  */
+#endif /* !YY_YY_HOME_BRENEMAL_SPWS_DATASET_READER_JSON_JSON_TAB_HH_INCLUDED  */

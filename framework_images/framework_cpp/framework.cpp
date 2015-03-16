@@ -6,7 +6,7 @@
 #include <iostream>
 #include "algorithm.h"	// interface for image processing algorithms
 
-#define RENDER		// define if you want to display image
+//#define RENDER		// define if you want to display image
 
 using namespace cv;
 using namespace std;
@@ -35,12 +35,8 @@ int main(int argc, char *argv[]) {
 	// display image
 #ifdef RENDER
 	imshow("opencvtest", img);
-#endif
 	// show results of sign recognition algorithm
 	sign ? cout << "This is a stop sign.\n" << endl : cout << "This is not a stop sign.\n" << endl;
-
-	// press any key to exit
-#ifdef RENDER
 	waitKey(0);
 #endif 
 	return sign;

@@ -62,7 +62,7 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 1 "/home/brenemal/spws/hog/includes/json++/json.y" /* yacc.c:339  */
+#line 1 "/home/brenemal/spws/dataset_reader/json++/json.y" /* yacc.c:339  */
 
 
     #include <iostream>
@@ -86,7 +86,7 @@
     JSON::Value* parsd = nullptr;
     void clean_up(void * buffer_state);
 
-#line 90 "/home/brenemal/spws/hog/includes/json++/json.tab.cc" /* yacc.c:339  */
+#line 90 "/home/brenemal/spws/dataset_reader/json++/json.tab.cc" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -106,8 +106,8 @@
 
 /* In a future release of Bison, this section will be replaced
    by #include "json.tab.hh".  */
-#ifndef YY_YY_HOME_BRENEMAL_SPWS_HOG_INCLUDES_JSON_JSON_TAB_HH_INCLUDED
-# define YY_YY_HOME_BRENEMAL_SPWS_HOG_INCLUDES_JSON_JSON_TAB_HH_INCLUDED
+#ifndef YY_YY_HOME_BRENEMAL_SPWS_DATASET_READER_JSON_JSON_TAB_HH_INCLUDED
+# define YY_YY_HOME_BRENEMAL_SPWS_DATASET_READER_JSON_JSON_TAB_HH_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -116,10 +116,10 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 25 "/home/brenemal/spws/hog/includes/json++/json.y" /* yacc.c:355  */
+#line 25 "/home/brenemal/spws/dataset_reader/json++/json.y" /* yacc.c:355  */
  #include "json_st.hh" 
 
-#line 123 "/home/brenemal/spws/hog/includes/json++/json.tab.cc" /* yacc.c:355  */
+#line 123 "/home/brenemal/spws/dataset_reader/json++/json.tab.cc" /* yacc.c:355  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -146,7 +146,7 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 28 "/home/brenemal/spws/hog/includes/json++/json.y" /* yacc.c:355  */
+#line 28 "/home/brenemal/spws/dataset_reader/json++/json.y" /* yacc.c:355  */
 
     // "Pure" types
     long long int int_v;
@@ -160,7 +160,7 @@ union YYSTYPE
     JSON::Array* array_p;
     JSON::Value* value_p;
 
-#line 164 "/home/brenemal/spws/hog/includes/json++/json.tab.cc" /* yacc.c:355  */
+#line 164 "/home/brenemal/spws/dataset_reader/json++/json.tab.cc" /* yacc.c:355  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
@@ -171,11 +171,11 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_HOME_BRENEMAL_SPWS_HOG_INCLUDES_JSON_JSON_TAB_HH_INCLUDED  */
+#endif /* !YY_YY_HOME_BRENEMAL_SPWS_DATASET_READER_JSON_JSON_TAB_HH_INCLUDED  */
 
 /* Copy the second part of user declarations.  */
 
-#line 179 "/home/brenemal/spws/hog/includes/json++/json.tab.cc" /* yacc.c:358  */
+#line 179 "/home/brenemal/spws/dataset_reader/json++/json.tab.cc" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -1256,67 +1256,67 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 66 "/home/brenemal/spws/hog/includes/json++/json.y" /* yacc.c:1646  */
+#line 66 "/home/brenemal/spws/dataset_reader/json++/json.y" /* yacc.c:1646  */
     { parsd = (yyvsp[0].value_p); }
-#line 1262 "/home/brenemal/spws/hog/includes/json++/json.tab.cc" /* yacc.c:1646  */
+#line 1262 "/home/brenemal/spws/dataset_reader/json++/json.tab.cc" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 69 "/home/brenemal/spws/hog/includes/json++/json.y" /* yacc.c:1646  */
+#line 69 "/home/brenemal/spws/dataset_reader/json++/json.y" /* yacc.c:1646  */
     { (yyval.object_p) = (yyvsp[-1].object_p); }
-#line 1268 "/home/brenemal/spws/hog/includes/json++/json.tab.cc" /* yacc.c:1646  */
+#line 1268 "/home/brenemal/spws/dataset_reader/json++/json.tab.cc" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 72 "/home/brenemal/spws/hog/includes/json++/json.y" /* yacc.c:1646  */
+#line 72 "/home/brenemal/spws/dataset_reader/json++/json.y" /* yacc.c:1646  */
     { (yyval.array_p) = (yyvsp[-1].array_p); }
-#line 1274 "/home/brenemal/spws/hog/includes/json++/json.tab.cc" /* yacc.c:1646  */
+#line 1274 "/home/brenemal/spws/dataset_reader/json++/json.tab.cc" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 75 "/home/brenemal/spws/hog/includes/json++/json.y" /* yacc.c:1646  */
+#line 75 "/home/brenemal/spws/dataset_reader/json++/json.y" /* yacc.c:1646  */
     { (yyval.value_p) = new JSON::Value((yyvsp[0].int_v)); }
-#line 1280 "/home/brenemal/spws/hog/includes/json++/json.tab.cc" /* yacc.c:1646  */
+#line 1280 "/home/brenemal/spws/dataset_reader/json++/json.tab.cc" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 76 "/home/brenemal/spws/hog/includes/json++/json.y" /* yacc.c:1646  */
+#line 76 "/home/brenemal/spws/dataset_reader/json++/json.y" /* yacc.c:1646  */
     { (yyval.value_p) = new JSON::Value((yyvsp[0].float_v)); }
-#line 1286 "/home/brenemal/spws/hog/includes/json++/json.tab.cc" /* yacc.c:1646  */
+#line 1286 "/home/brenemal/spws/dataset_reader/json++/json.tab.cc" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 77 "/home/brenemal/spws/hog/includes/json++/json.y" /* yacc.c:1646  */
+#line 77 "/home/brenemal/spws/dataset_reader/json++/json.y" /* yacc.c:1646  */
     { (yyval.value_p) = new JSON::Value((yyvsp[0].bool_v)); }
-#line 1292 "/home/brenemal/spws/hog/includes/json++/json.tab.cc" /* yacc.c:1646  */
+#line 1292 "/home/brenemal/spws/dataset_reader/json++/json.tab.cc" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 78 "/home/brenemal/spws/hog/includes/json++/json.y" /* yacc.c:1646  */
+#line 78 "/home/brenemal/spws/dataset_reader/json++/json.y" /* yacc.c:1646  */
     { (yyval.value_p) = new JSON::Value(); }
-#line 1298 "/home/brenemal/spws/hog/includes/json++/json.tab.cc" /* yacc.c:1646  */
+#line 1298 "/home/brenemal/spws/dataset_reader/json++/json.tab.cc" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 79 "/home/brenemal/spws/hog/includes/json++/json.y" /* yacc.c:1646  */
+#line 79 "/home/brenemal/spws/dataset_reader/json++/json.y" /* yacc.c:1646  */
     { (yyval.value_p) = new JSON::Value(std::move(std::string((yyvsp[0].string_v)))); delete (yyvsp[0].string_v); }
-#line 1304 "/home/brenemal/spws/hog/includes/json++/json.tab.cc" /* yacc.c:1646  */
+#line 1304 "/home/brenemal/spws/dataset_reader/json++/json.tab.cc" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 80 "/home/brenemal/spws/hog/includes/json++/json.y" /* yacc.c:1646  */
+#line 80 "/home/brenemal/spws/dataset_reader/json++/json.y" /* yacc.c:1646  */
     { (yyval.value_p) = new JSON::Value(std::move(*(yyvsp[0].object_p))); delete (yyvsp[0].object_p); }
-#line 1310 "/home/brenemal/spws/hog/includes/json++/json.tab.cc" /* yacc.c:1646  */
+#line 1310 "/home/brenemal/spws/dataset_reader/json++/json.tab.cc" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 81 "/home/brenemal/spws/hog/includes/json++/json.y" /* yacc.c:1646  */
+#line 81 "/home/brenemal/spws/dataset_reader/json++/json.y" /* yacc.c:1646  */
     { (yyval.value_p) = new JSON::Value(std::move(*(yyvsp[0].array_p))); delete (yyvsp[0].array_p); }
-#line 1316 "/home/brenemal/spws/hog/includes/json++/json.tab.cc" /* yacc.c:1646  */
+#line 1316 "/home/brenemal/spws/dataset_reader/json++/json.tab.cc" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 85 "/home/brenemal/spws/hog/includes/json++/json.y" /* yacc.c:1646  */
+#line 85 "/home/brenemal/spws/dataset_reader/json++/json.y" /* yacc.c:1646  */
     {
         // Trim string
         std::string s { (yyvsp[0].string_v) + 1, yyleng - 2 };
@@ -1327,11 +1327,11 @@ yyreduce:
         strcpy(t, s.c_str());
         (yyval.string_v) = t;
     }
-#line 1331 "/home/brenemal/spws/hog/includes/json++/json.tab.cc" /* yacc.c:1646  */
+#line 1331 "/home/brenemal/spws/dataset_reader/json++/json.tab.cc" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 95 "/home/brenemal/spws/hog/includes/json++/json.y" /* yacc.c:1646  */
+#line 95 "/home/brenemal/spws/dataset_reader/json++/json.y" /* yacc.c:1646  */
     {
         // Trim string
         std::string s((yyvsp[0].string_v));
@@ -1340,63 +1340,63 @@ yyreduce:
         strcpy(t, s.c_str());
         (yyval.string_v) = t;
     }
-#line 1344 "/home/brenemal/spws/hog/includes/json++/json.tab.cc" /* yacc.c:1646  */
+#line 1344 "/home/brenemal/spws/dataset_reader/json++/json.tab.cc" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 105 "/home/brenemal/spws/hog/includes/json++/json.y" /* yacc.c:1646  */
+#line 105 "/home/brenemal/spws/dataset_reader/json++/json.y" /* yacc.c:1646  */
     { (yyval.object_p) = new JSON::Object(); }
-#line 1350 "/home/brenemal/spws/hog/includes/json++/json.tab.cc" /* yacc.c:1646  */
+#line 1350 "/home/brenemal/spws/dataset_reader/json++/json.tab.cc" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 106 "/home/brenemal/spws/hog/includes/json++/json.y" /* yacc.c:1646  */
+#line 106 "/home/brenemal/spws/dataset_reader/json++/json.y" /* yacc.c:1646  */
     {
         (yyval.object_p) = new JSON::Object();
         (yyval.object_p)->insert(std::make_pair(std::string((yyvsp[-2].string_v)), std::move(*(yyvsp[0].value_p))));
         delete (yyvsp[-2].string_v);
         delete (yyvsp[0].value_p);
     }
-#line 1361 "/home/brenemal/spws/hog/includes/json++/json.tab.cc" /* yacc.c:1646  */
+#line 1361 "/home/brenemal/spws/dataset_reader/json++/json.tab.cc" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 112 "/home/brenemal/spws/hog/includes/json++/json.y" /* yacc.c:1646  */
+#line 112 "/home/brenemal/spws/dataset_reader/json++/json.y" /* yacc.c:1646  */
     { 
         (yyval.object_p)->insert(std::make_pair(std::string((yyvsp[-2].string_v)), std::move(*(yyvsp[0].value_p))));
         delete (yyvsp[-2].string_v);
         delete (yyvsp[0].value_p);
     }
-#line 1371 "/home/brenemal/spws/hog/includes/json++/json.tab.cc" /* yacc.c:1646  */
+#line 1371 "/home/brenemal/spws/dataset_reader/json++/json.tab.cc" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 120 "/home/brenemal/spws/hog/includes/json++/json.y" /* yacc.c:1646  */
+#line 120 "/home/brenemal/spws/dataset_reader/json++/json.y" /* yacc.c:1646  */
     { (yyval.array_p) = new JSON::Array(); }
-#line 1377 "/home/brenemal/spws/hog/includes/json++/json.tab.cc" /* yacc.c:1646  */
+#line 1377 "/home/brenemal/spws/dataset_reader/json++/json.tab.cc" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 121 "/home/brenemal/spws/hog/includes/json++/json.y" /* yacc.c:1646  */
+#line 121 "/home/brenemal/spws/dataset_reader/json++/json.y" /* yacc.c:1646  */
     {
         (yyval.array_p) = new JSON::Array();
         (yyval.array_p)->push_back(std::move(*(yyvsp[0].value_p)));
         delete (yyvsp[0].value_p);
     }
-#line 1387 "/home/brenemal/spws/hog/includes/json++/json.tab.cc" /* yacc.c:1646  */
+#line 1387 "/home/brenemal/spws/dataset_reader/json++/json.tab.cc" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 126 "/home/brenemal/spws/hog/includes/json++/json.y" /* yacc.c:1646  */
+#line 126 "/home/brenemal/spws/dataset_reader/json++/json.y" /* yacc.c:1646  */
     { 
         (yyval.array_p)->push_back(std::move(*(yyvsp[0].value_p))); 
         delete (yyvsp[0].value_p);
     }
-#line 1396 "/home/brenemal/spws/hog/includes/json++/json.tab.cc" /* yacc.c:1646  */
+#line 1396 "/home/brenemal/spws/dataset_reader/json++/json.tab.cc" /* yacc.c:1646  */
     break;
 
 
-#line 1400 "/home/brenemal/spws/hog/includes/json++/json.tab.cc" /* yacc.c:1646  */
+#line 1400 "/home/brenemal/spws/dataset_reader/json++/json.tab.cc" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1624,7 +1624,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 132 "/home/brenemal/spws/hog/includes/json++/json.y" /* yacc.c:1906  */
+#line 132 "/home/brenemal/spws/dataset_reader/json++/json.y" /* yacc.c:1906  */
 
 
 namespace {

@@ -1,6 +1,6 @@
-#line 2 "/home/brenemal/spws/hog/includes/json++/lex.yy.cc"
+#line 2 "/home/brenemal/spws/dataset_reader/json++/lex.yy.cc"
 
-#line 4 "/home/brenemal/spws/hog/includes/json++/lex.yy.cc"
+#line 4 "/home/brenemal/spws/dataset_reader/json++/lex.yy.cc"
 
 #define  YY_INT_ALIGNED short int
 
@@ -515,8 +515,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "/home/brenemal/spws/hog/includes/json++/json.l"
-#line 3 "/home/brenemal/spws/hog/includes/json++/json.l"
+#line 1 "/home/brenemal/spws/dataset_reader/json++/json.l"
+#line 3 "/home/brenemal/spws/dataset_reader/json++/json.l"
     // Provided externally
     extern "C" 
     {
@@ -528,7 +528,7 @@ char *yytext;
     
     // Needed for the tokens
     #include "json.tab.hh"
-#line 532 "/home/brenemal/spws/hog/includes/json++/lex.yy.cc"
+#line 532 "/home/brenemal/spws/dataset_reader/json++/lex.yy.cc"
 
 #define INITIAL 0
 
@@ -715,10 +715,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 22 "/home/brenemal/spws/hog/includes/json++/json.l"
+#line 22 "/home/brenemal/spws/dataset_reader/json++/json.l"
 
 
-#line 722 "/home/brenemal/spws/hog/includes/json++/lex.yy.cc"
+#line 722 "/home/brenemal/spws/dataset_reader/json++/lex.yy.cc"
 
 	if ( !(yy_init) )
 		{
@@ -814,87 +814,87 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 24 "/home/brenemal/spws/hog/includes/json++/json.l"
+#line 24 "/home/brenemal/spws/dataset_reader/json++/json.l"
 { yylval.string_v = yytext; return DOUBLE_QUOTED_STRING; }
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 25 "/home/brenemal/spws/hog/includes/json++/json.l"
+#line 25 "/home/brenemal/spws/dataset_reader/json++/json.l"
 { yylval.string_v = yytext; return SINGLE_QUOTED_STRING; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 26 "/home/brenemal/spws/hog/includes/json++/json.l"
+#line 26 "/home/brenemal/spws/dataset_reader/json++/json.l"
 { return SQUARE_BRACKET_L; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 27 "/home/brenemal/spws/hog/includes/json++/json.l"
+#line 27 "/home/brenemal/spws/dataset_reader/json++/json.l"
 { return SQUARE_BRACKET_R; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 28 "/home/brenemal/spws/hog/includes/json++/json.l"
+#line 28 "/home/brenemal/spws/dataset_reader/json++/json.l"
 { return CURLY_BRACKET_L; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 29 "/home/brenemal/spws/hog/includes/json++/json.l"
+#line 29 "/home/brenemal/spws/dataset_reader/json++/json.l"
 { return CURLY_BRACKET_R; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 30 "/home/brenemal/spws/hog/includes/json++/json.l"
+#line 30 "/home/brenemal/spws/dataset_reader/json++/json.l"
 { return COMMA; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 31 "/home/brenemal/spws/hog/includes/json++/json.l"
+#line 31 "/home/brenemal/spws/dataset_reader/json++/json.l"
 { return COLON; }
 	YY_BREAK
 case 9:
 /* rule 9 can match eol */
 YY_RULE_SETUP
-#line 32 "/home/brenemal/spws/hog/includes/json++/json.l"
+#line 32 "/home/brenemal/spws/dataset_reader/json++/json.l"
 { }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 33 "/home/brenemal/spws/hog/includes/json++/json.l"
+#line 33 "/home/brenemal/spws/dataset_reader/json++/json.l"
 { }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 34 "/home/brenemal/spws/hog/includes/json++/json.l"
+#line 34 "/home/brenemal/spws/dataset_reader/json++/json.l"
 { yylval.int_v = std::stoll(yytext); return NUMBER_I; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 35 "/home/brenemal/spws/hog/includes/json++/json.l"
+#line 35 "/home/brenemal/spws/dataset_reader/json++/json.l"
 { yylval.float_v = std::stold(yytext); return NUMBER_F; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 36 "/home/brenemal/spws/hog/includes/json++/json.l"
+#line 36 "/home/brenemal/spws/dataset_reader/json++/json.l"
 { yylval.bool_v = ( strcmp(yytext, "true") == 0 ? true : false); return BOOLEAN; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 37 "/home/brenemal/spws/hog/includes/json++/json.l"
+#line 37 "/home/brenemal/spws/dataset_reader/json++/json.l"
 { return NULL_T; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 38 "/home/brenemal/spws/hog/includes/json++/json.l"
+#line 38 "/home/brenemal/spws/dataset_reader/json++/json.l"
 {  }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 40 "/home/brenemal/spws/hog/includes/json++/json.l"
+#line 40 "/home/brenemal/spws/dataset_reader/json++/json.l"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 898 "/home/brenemal/spws/hog/includes/json++/lex.yy.cc"
+#line 898 "/home/brenemal/spws/dataset_reader/json++/lex.yy.cc"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1904,7 +1904,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 40 "/home/brenemal/spws/hog/includes/json++/json.l"
+#line 40 "/home/brenemal/spws/dataset_reader/json++/json.l"
 
 
 
