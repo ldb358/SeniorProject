@@ -106,8 +106,8 @@ int main(int argc, char** argv){
 			string cls = dataset.get_class(img_data.tags[i].clss);
 			//we only want tags of our current training class
 			if(cls != CLASS){
-				cout << "Not Right Class -> Skipping";
-				continue;
+				//cout << "Not Right Class -> Skipping";
+				//continue;
 			}
 			//if the image size == max image the box is valid, its just 1 px to big
 			int mod =0;
@@ -133,7 +133,8 @@ int main(int argc, char** argv){
 		cout << endl;	
 	}
 	cout << "Training Vocab" << endl;
-	int cluster_count = 1000;
+	cout << training_descriptors.size() << endl;
+	int cluster_count = 1500;
 	//create a trainer with 1000 clusters
 	BOWKMeansTrainer bow_trainer(cluster_count);
 
@@ -153,8 +154,8 @@ int main(int argc, char** argv){
 	extractor.setVocabulary(vocab);
 	computeFeaturesWithBOW(dataset, training_data, labels, extractor);
 	
-	double c=16;
-	double gamma=.5;
+	double c=16;//16
+	double gamma=1.1;
 	CvSVMParams params;
 	params.kernel_type=CvSVM::RBF;
 	params.svm_type=CvSVM::C_SVC;

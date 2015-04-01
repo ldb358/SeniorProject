@@ -25,7 +25,11 @@ int main(int argc, char *argv[]) {
 		exit(EXIT_FAILURE);
 	}
 	int sign = 0;
-
+#ifndef RENDER
+    if(argc == 3){
+        #define RENDER
+    }
+#endif
 	// load image data  
 	Mat img = imread(argv[1], CV_LOAD_IMAGE_COLOR);
 
