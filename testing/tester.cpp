@@ -26,10 +26,11 @@ int main(int argc, char**argv){
     while(dataset->has_next()){
         dataset->next(img_data);
         cur++;
-        clock_t t1,t2; 
-        int status = 0;
+        struct timespec start, finish;
+        double delta_t;
         //start clock
-        t1 = clock();
+        clock_gettime(CLOCK_MONOTONIC, &start); 
+        int status = 0;
         //fork and get status
         int pid = fork();
         if(pid == 0){
@@ -40,9 +41,12 @@ int main(int argc, char**argv){
         }
         //wait for the child to stop
         wait(&status);
-        t2= clock();
+        //end clock
+        clock_gettime(CLOCK_MONOTONIC, &finish);
         //add clock cycles taken to running total
-        double delta_t = ((float)t2-(float)t1);
+        delta_t = (finish.tv_sec - start.tv_sec);
+        delta_t += (finish.tv_nsec - start.tv_nsec) / 1000000000.0;
+
         total_exec_time += delta_t;
         int ispos = 0;
         //foreach tag if tag.class == "stopsign"
@@ -59,12 +63,12 @@ int main(int argc, char**argv){
         }
         cout << "Testing with image " << cur << " Expected:" << (ispos? "pos" : "neg")
             << " Got:" << (status? "pos" : "neg") << endl;
-        myfile << delta_t/CLOCKS_PER_SEC << "," << ((status==ispos)? "correct" : "incorrect") << endl;
+        myfile << delta_t << "," << ((status==ispos)? "correct" : "incorrect") << endl;
     }
     myfile << "Number of Samples" << "," << "Total run time(seconds)" << "," 
         << "average time per image(seconds)" << "," << "total correct" << "," 
         << "total false positive" << "," << "percentage correct" << endl;
-    myfile << cur << "," << total_exec_time/CLOCKS_PER_SEC << "," 
-        << (total_exec_time/CLOCKS_PER_SEC)/cur << "," << pos_matches << "," 
+    myfile << cur << "," << total_exec_time << "," 
+        << (total_exec_time/cur) << "," << pos_matches << "," 
         << neg_matches  << "," << ((float)pos_matches/cur)*100 << endl;
 }

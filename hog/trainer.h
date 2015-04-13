@@ -9,12 +9,13 @@
 #include<opencv2/ml/ml.hpp>
 #include "includes/FileReader.h"
 #include "includes/SampleDetector.h"
+#include "includes/LinearSVM.h"
 #include "../dataset_reader/DsReader.h"
 #include "includes/helper.h"
 using namespace std;
 using namespace cv;
 
 #define NUM_THREADS 4
-#define STEP_SIZE 8
+#define STEP_SIZE 12
 #define CLASS "stopsign"
 

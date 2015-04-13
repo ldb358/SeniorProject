@@ -53,7 +53,7 @@ int main(int argc, char**argv){
     params.term_crit   = cvTermCriteria(CV_TERMCRIT_ITER, 250, 1e-10);
     params.C = 200;
     
-    LinearSVM *svm = new LinearSVM;
+    CvSVM *svm = new CvSVM;
     svm->train(training_mat, training_label, Mat(), Mat(), params);
     DsReader dataset(argv[1]);
     if(!dataset.data_exists()){
@@ -100,6 +100,7 @@ int main(int argc, char**argv){
                 if(cls != type || cls == "na"){
                     break;
                 }
+                cout << Point(matches[i].x, matches[i].y) << Point(matches[i].x+dataset.tag_width(), matches[i].y+dataset.tag_height()) << endl;
                 //get the overlap of the found object and the tag
                 int overlap = get_overlap(matches[i].x, matches[i].y,
                                           img_data.tags[n].pos.x, img_data.tags[n].pos.y, 
@@ -107,7 +108,11 @@ int main(int argc, char**argv){
                                           img_data.tags[n].scale);
                 
                 float ratio = ((float)overlap)/tag_area;
-                if(ratio > .5){
+                if(ratio > .8){
+                    rectangle(img, Point(matches[i].x, matches[i].y), 
+                               Point(matches[i].x+dataset.tag_width(), matches[i].y+dataset.tag_height()), 
+                               Scalar(0, 0, 255),
+                               2, 8, 0); 
                     //perform non-max supression and add as positive samples
                     ispos = true;
                     pos_img = 1;
@@ -123,6 +128,10 @@ int main(int argc, char**argv){
         }
         detect.clear();
         cout << "image " << cur << "/" << dataset.size() << " Status:" << pos_img <<  endl;
+        if(pos_img){
+            imshow("test", img);
+            waitKey(0);
+        }
     }
     //print the pos and neg counts and percentages
     cout << positive_count << " Positve, " << negative_count << " Negative " << ((float)positive_count/negative_count) << "+/-" << endl;
@@ -148,24 +157,48 @@ int main(int argc, char**argv){
     positive_count = 0;
     negative_count = 0;
     dataset.reset();
-
-    vector<float> support_vector;
-    svm->getSupportVector(support_vector);
-    gpu::HOGDescriptor gdesc;
-    gdesc.setSVMDetector(support_vector);
-
     while(dataset.has_next()){
         cur++;
         dataset.next(img_data);
-        Mat img = imread(img_data.path);
-        //upload the image to the gpu for detection
-        gpu::GpuMat gimg;
-        gimg.upload(img);
-        //create the vector to hold the results
-        vector<Rect> matches;
-        gdesc.detectMultiScale(gimg, matches, 0, Size(), Size(0, 0), 1.05, 2);
-        cout << matches.size() << endl;
-        //cout << "Testing with image " << cur << "/" << dataset.size() << endl;
+        Mat img = imread(img_data.path, 0); 
+        detect.set_img(img);
+        for(int i=0, max_rows=img.rows-dataset.tag_height(); i < max_rows; i+=step_size){
+            //note: implement this without threads first, but make it in a class so moving to threads is posible
+            //spawn a thread that will check every col in the row for matches 
+            detect.scan_row_threaded(desc, i, step_size);
+        }
+        while(detect.tworking()){}
+        vector<struct SdMatch> matches = detect.get_matches();
+        
+        int tag_area = dataset.tag_width()*dataset.tag_height();    
+        for(int i=0; i < matches.size(); ++i){ 
+            int ispos = false;
+            for(int n=0; n < img_data.tags.size(); ++n){
+                string cls = dataset.get_class(img_data.tags[n].clss);
+                //first check if this tag is even the right type of object
+                if(cls != type || cls == "na"){
+                    break;
+                }
+                //get the overlap of the found object and the tag
+                int overlap = get_overlap(matches[i].x, matches[i].y,
+                                          img_data.tags[n].pos.x, img_data.tags[n].pos.y, 
+                                          dataset.tag_width(), dataset.tag_height(),
+                                          img_data.tags[n].scale);
+
+                float ratio = ((float)overlap)/tag_area;
+                if(ratio > .3){
+                    ispos = true;
+                }
+            }
+            if(ispos){
+                positive_count++; 
+                break;
+            }else{
+                negative_count++;
+            }
+        }
+        detect.clear();
+        cout << "Testing with image " << cur << "/" << dataset.size() << endl;
     }
     cout << positive_count << " Positve, " << negative_count << " Negative " << ((float)positive_count/((negative_count!=0)?negative_count: 1)) << "+/-" << endl;
     while(detect.cur_threads() > 0){

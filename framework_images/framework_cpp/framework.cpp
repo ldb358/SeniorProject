@@ -24,11 +24,14 @@ int main(int argc, char *argv[]) {
 		cout << "Usage: framework image_file" << endl;
 		exit(EXIT_FAILURE);
 	}
+	int render = 0;
 	int sign = 0;
 #ifndef RENDER
     if(argc == 3){
-        #define RENDER
+        render = 1;
     }
+#else
+    render = 1;
 #endif
 	// load image data  
 	Mat img = imread(argv[1], CV_LOAD_IMAGE_COLOR);
@@ -37,12 +40,12 @@ int main(int argc, char *argv[]) {
 	sign = processImage(img);
 
 	// display image
-#ifdef RENDER
-	imshow("opencvtest", img);
-	// show results of sign recognition algorithm
-	sign ? cout << "This is a stop sign.\n" << endl : cout << "This is not a stop sign.\n" << endl;
-	waitKey(0);
-#endif 
+    if(render){
+        imshow("opencvtest", img);
+        // show results of sign recognition algorithm
+        sign ? cout << "This is a stop sign.\n" << endl : cout << "This is not a stop sign.\n" << endl;
+        waitKey(0);
+    }
 	return sign;
 }
 

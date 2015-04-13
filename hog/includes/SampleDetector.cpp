@@ -59,7 +59,7 @@ void SampleDetector::kill_thread(){
 void SampleDetector::add_pos(int row, int col, vector<float> &desc){
     //make sure that only one thread is adding a pos at a time
     pthread_mutex_lock(&write_match);
-    struct SdMatch pos = {row, col, desc};
+    struct SdMatch pos = {col, row, desc};
     found.push_back(pos);
     pthread_mutex_unlock(&write_match);
 }

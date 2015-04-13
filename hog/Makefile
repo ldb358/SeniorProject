@@ -1,5 +1,5 @@
 jsondir=../dataset_reader/json++
-includes=includes/FileReader.o includes/SampleDetector.o includes/helper.o ../dataset_reader/DsReader.o
+includes=includes/FileReader.o includes/SampleDetector.o includes/helper.o ../dataset_reader/DsReader.o includes/LinearSVM.o
 detect_includes=includes/SampleDetector.o includes/helper.o 
 libs=-L $(jsondir)/ -l json
 opencv=`pkg-config --cflags --libs opencv`
@@ -22,6 +22,10 @@ includes/FileReader.o: includes/FileReader.cpp
 
 ../dataset_reader/sReader.o: ../dataset_reader/DsReader.cpp
 	g++ -std=c++11 -c ../dataset_reader/DsReader.cpp -o ../dataset_reader/DsReader.o
+
+includes/LinearSVM.o: includes/LinearSVM.cpp
+	g++ -c includes/LinearSVM.cpp -o includes/LinearSVM.o
+
 
 includes/SampleDetector.o: includes/SampleDetector.cpp
 	g++ -std=c++11 -c includes/SampleDetector.cpp -o includes/SampleDetector.o
