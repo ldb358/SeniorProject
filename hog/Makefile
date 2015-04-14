@@ -3,24 +3,25 @@ includes=includes/FileReader.o includes/SampleDetector.o includes/helper.o ../da
 detect_includes=includes/SampleDetector.o includes/helper.o 
 libs=-L $(jsondir)/ -l json
 opencv=`pkg-config --cflags --libs opencv`
+cuda=-L /usr/local/cuda/lib/
 default: trainer
 
 
 trainer: trainer.cpp $(includes)
 	g++ -g -pthread -std=c++11 -c -o trainer.o trainer.cpp
-	g++ -g trainer.o $(includes) $(libs) -Wall -o trainer $(opencv) 
+	g++ -g -std=c++11 trainer.o $(includes) $(libs) $(cuda) -Wall -o trainer $(opencv) 
 
 libhogdetect.so: detector.cpp $(detect_includes)
 	g++ -g -pthread -std=c++11 -fPIC -c -o detector.o detector.cpp 
 	g++ -std=c++11 -c -fPIC includes/SampleDetector.cpp -o includes/SampleDetector.o
 	g++ -fPIC -c includes/helper.cpp -o includes/helper.o
-	g++ -shared -o libhogdetect.so detector.o $(detect_includes) $(opencv)
+	g++ -shared -o libhogdetect.so detector.o $(detect_includes) $(cuda) $(opencv)
 
 
 includes/FileReader.o: includes/FileReader.cpp
 	g++ -c includes/FileReader.cpp -o includes/FileReader.o
 
-../dataset_reader/sReader.o: ../dataset_reader/DsReader.cpp
+../dataset_reader/DsReader.o: ../dataset_reader/DsReader.cpp
 	g++ -std=c++11 -c ../dataset_reader/DsReader.cpp -o ../dataset_reader/DsReader.o
 
 includes/LinearSVM.o: includes/LinearSVM.cpp

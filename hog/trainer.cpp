@@ -9,6 +9,7 @@ int main(int argc, char**argv){
             << endl;
         return -1;
     }
+    cout << "GPU Count:" << gpu::getCudaEnabledDeviceCount() << endl;
     FileReader file(argv[2]);
     if(!file.is_open()){
         cout << "File couldn't be opened... exiting.";
