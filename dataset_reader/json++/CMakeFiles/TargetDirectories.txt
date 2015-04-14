@@ -1,2 +1,2 @@
-/home/brenemal/spws/dataset_reader/json++/CMakeFiles/json.dir
-/home/brenemal/spws/dataset_reader/json++/CMakeFiles/test.dir
+/home/sp/SeniorProject/dataset_reader/json++/CMakeFiles/json.dir
+/home/sp/SeniorProject/dataset_reader/json++/CMakeFiles/test.dir

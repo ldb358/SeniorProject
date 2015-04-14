@@ -35,10 +35,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/brenemal/spws/dataset_reader/json++
+CMAKE_SOURCE_DIR = /home/sp/SeniorProject/dataset_reader/json++
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/brenemal/spws/dataset_reader/json++
+CMAKE_BINARY_DIR = /home/sp/SeniorProject/dataset_reader/json++
 
 # Include any dependencies generated for this target.
 include CMakeFiles/json.dir/depend.make
@@ -50,28 +50,28 @@ include CMakeFiles/json.dir/progress.make
 include CMakeFiles/json.dir/flags.make
 
 json.tab.cc: json.y
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/brenemal/spws/dataset_reader/json++/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/sp/SeniorProject/dataset_reader/json++/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating json.tab.hh, json.tab.cc (parser)"
-	/usr/bin/bison --defines=/home/brenemal/spws/dataset_reader/json++/json.tab.hh --output=/home/brenemal/spws/dataset_reader/json++/json.tab.cc /home/brenemal/spws/dataset_reader/json++/json.y
+	/usr/bin/bison --defines=/home/sp/SeniorProject/dataset_reader/json++/json.tab.hh --output=/home/sp/SeniorProject/dataset_reader/json++/json.tab.cc /home/sp/SeniorProject/dataset_reader/json++/json.y
 
 lex.yy.cc: json.l
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/brenemal/spws/dataset_reader/json++/CMakeFiles $(CMAKE_PROGRESS_2)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/sp/SeniorProject/dataset_reader/json++/CMakeFiles $(CMAKE_PROGRESS_2)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating lex.yy.cc (lexer)"
-	/usr/bin/flex --outfile=/home/brenemal/spws/dataset_reader/json++/lex.yy.cc /home/brenemal/spws/dataset_reader/json++/json.l
+	/usr/bin/flex --outfile=/home/sp/SeniorProject/dataset_reader/json++/lex.yy.cc /home/sp/SeniorProject/dataset_reader/json++/json.l
 
 CMakeFiles/json.dir/json_st.cc.o: CMakeFiles/json.dir/flags.make
 CMakeFiles/json.dir/json_st.cc.o: json_st.cc
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/brenemal/spws/dataset_reader/json++/CMakeFiles $(CMAKE_PROGRESS_3)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/sp/SeniorProject/dataset_reader/json++/CMakeFiles $(CMAKE_PROGRESS_3)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/json.dir/json_st.cc.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/json.dir/json_st.cc.o -c /home/brenemal/spws/dataset_reader/json++/json_st.cc
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/json.dir/json_st.cc.o -c /home/sp/SeniorProject/dataset_reader/json++/json_st.cc
 
 CMakeFiles/json.dir/json_st.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/json.dir/json_st.cc.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/brenemal/spws/dataset_reader/json++/json_st.cc > CMakeFiles/json.dir/json_st.cc.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/sp/SeniorProject/dataset_reader/json++/json_st.cc > CMakeFiles/json.dir/json_st.cc.i
 
 CMakeFiles/json.dir/json_st.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/json.dir/json_st.cc.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/brenemal/spws/dataset_reader/json++/json_st.cc -o CMakeFiles/json.dir/json_st.cc.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/sp/SeniorProject/dataset_reader/json++/json_st.cc -o CMakeFiles/json.dir/json_st.cc.s
 
 CMakeFiles/json.dir/json_st.cc.o.requires:
 .PHONY : CMakeFiles/json.dir/json_st.cc.o.requires
@@ -84,17 +84,17 @@ CMakeFiles/json.dir/json_st.cc.o.provides.build: CMakeFiles/json.dir/json_st.cc.
 
 CMakeFiles/json.dir/json.tab.cc.o: CMakeFiles/json.dir/flags.make
 CMakeFiles/json.dir/json.tab.cc.o: json.tab.cc
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/brenemal/spws/dataset_reader/json++/CMakeFiles $(CMAKE_PROGRESS_4)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/sp/SeniorProject/dataset_reader/json++/CMakeFiles $(CMAKE_PROGRESS_4)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/json.dir/json.tab.cc.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/json.dir/json.tab.cc.o -c /home/brenemal/spws/dataset_reader/json++/json.tab.cc
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/json.dir/json.tab.cc.o -c /home/sp/SeniorProject/dataset_reader/json++/json.tab.cc
 
 CMakeFiles/json.dir/json.tab.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/json.dir/json.tab.cc.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/brenemal/spws/dataset_reader/json++/json.tab.cc > CMakeFiles/json.dir/json.tab.cc.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/sp/SeniorProject/dataset_reader/json++/json.tab.cc > CMakeFiles/json.dir/json.tab.cc.i
 
 CMakeFiles/json.dir/json.tab.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/json.dir/json.tab.cc.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/brenemal/spws/dataset_reader/json++/json.tab.cc -o CMakeFiles/json.dir/json.tab.cc.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/sp/SeniorProject/dataset_reader/json++/json.tab.cc -o CMakeFiles/json.dir/json.tab.cc.s
 
 CMakeFiles/json.dir/json.tab.cc.o.requires:
 .PHONY : CMakeFiles/json.dir/json.tab.cc.o.requires
@@ -107,17 +107,17 @@ CMakeFiles/json.dir/json.tab.cc.o.provides.build: CMakeFiles/json.dir/json.tab.c
 
 CMakeFiles/json.dir/lex.yy.cc.o: CMakeFiles/json.dir/flags.make
 CMakeFiles/json.dir/lex.yy.cc.o: lex.yy.cc
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/brenemal/spws/dataset_reader/json++/CMakeFiles $(CMAKE_PROGRESS_5)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/sp/SeniorProject/dataset_reader/json++/CMakeFiles $(CMAKE_PROGRESS_5)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/json.dir/lex.yy.cc.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -Wno-deprecated-register -o CMakeFiles/json.dir/lex.yy.cc.o -c /home/brenemal/spws/dataset_reader/json++/lex.yy.cc
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -Wno-deprecated-register -o CMakeFiles/json.dir/lex.yy.cc.o -c /home/sp/SeniorProject/dataset_reader/json++/lex.yy.cc
 
 CMakeFiles/json.dir/lex.yy.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/json.dir/lex.yy.cc.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -Wno-deprecated-register -E /home/brenemal/spws/dataset_reader/json++/lex.yy.cc > CMakeFiles/json.dir/lex.yy.cc.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -Wno-deprecated-register -E /home/sp/SeniorProject/dataset_reader/json++/lex.yy.cc > CMakeFiles/json.dir/lex.yy.cc.i
 
 CMakeFiles/json.dir/lex.yy.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/json.dir/lex.yy.cc.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -Wno-deprecated-register -S /home/brenemal/spws/dataset_reader/json++/lex.yy.cc -o CMakeFiles/json.dir/lex.yy.cc.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -Wno-deprecated-register -S /home/sp/SeniorProject/dataset_reader/json++/lex.yy.cc -o CMakeFiles/json.dir/lex.yy.cc.s
 
 CMakeFiles/json.dir/lex.yy.cc.o.requires:
 .PHONY : CMakeFiles/json.dir/lex.yy.cc.o.requires
@@ -161,6 +161,6 @@ CMakeFiles/json.dir/clean:
 
 CMakeFiles/json.dir/depend: json.tab.cc
 CMakeFiles/json.dir/depend: lex.yy.cc
-	cd /home/brenemal/spws/dataset_reader/json++ && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/brenemal/spws/dataset_reader/json++ /home/brenemal/spws/dataset_reader/json++ /home/brenemal/spws/dataset_reader/json++ /home/brenemal/spws/dataset_reader/json++ /home/brenemal/spws/dataset_reader/json++/CMakeFiles/json.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/sp/SeniorProject/dataset_reader/json++ && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/sp/SeniorProject/dataset_reader/json++ /home/sp/SeniorProject/dataset_reader/json++ /home/sp/SeniorProject/dataset_reader/json++ /home/sp/SeniorProject/dataset_reader/json++ /home/sp/SeniorProject/dataset_reader/json++/CMakeFiles/json.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/json.dir/depend
 

@@ -6,17 +6,17 @@
 
 #IncludeRegexTransform: 
 
-/home/brenemal/spws/dataset_reader/json++/json.hh
+/home/sp/SeniorProject/dataset_reader/json++/json.hh
 json_st.hh
-/home/brenemal/spws/dataset_reader/json++/json_st.hh
+/home/sp/SeniorProject/dataset_reader/json++/json_st.hh
 json.tab.hh
-/home/brenemal/spws/dataset_reader/json++/json.tab.hh
+/home/sp/SeniorProject/dataset_reader/json++/json.tab.hh
 
-/home/brenemal/spws/dataset_reader/json++/json.tab.hh
+/home/sp/SeniorProject/dataset_reader/json++/json.tab.hh
 json_st.hh
-/home/brenemal/spws/dataset_reader/json++/json_st.hh
+/home/sp/SeniorProject/dataset_reader/json++/json_st.hh
 
-/home/brenemal/spws/dataset_reader/json++/json_st.hh
+/home/sp/SeniorProject/dataset_reader/json++/json_st.hh
 iostream
 -
 map
@@ -26,9 +26,9 @@ vector
 stack
 -
 
-/home/brenemal/spws/dataset_reader/json++/test.cc
+/home/sp/SeniorProject/dataset_reader/json++/test.cc
 iostream
 -
 json.hh
-/home/brenemal/spws/dataset_reader/json++/json.hh
+/home/sp/SeniorProject/dataset_reader/json++/json.hh
 

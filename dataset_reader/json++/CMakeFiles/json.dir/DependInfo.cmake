@@ -4,9 +4,9 @@ SET(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 SET(CMAKE_DEPENDS_CHECK_CXX
-  "/home/brenemal/spws/dataset_reader/json++/json.tab.cc" "/home/brenemal/spws/dataset_reader/json++/CMakeFiles/json.dir/json.tab.cc.o"
-  "/home/brenemal/spws/dataset_reader/json++/json_st.cc" "/home/brenemal/spws/dataset_reader/json++/CMakeFiles/json.dir/json_st.cc.o"
-  "/home/brenemal/spws/dataset_reader/json++/lex.yy.cc" "/home/brenemal/spws/dataset_reader/json++/CMakeFiles/json.dir/lex.yy.cc.o"
+  "/home/sp/SeniorProject/dataset_reader/json++/json.tab.cc" "/home/sp/SeniorProject/dataset_reader/json++/CMakeFiles/json.dir/json.tab.cc.o"
+  "/home/sp/SeniorProject/dataset_reader/json++/json_st.cc" "/home/sp/SeniorProject/dataset_reader/json++/CMakeFiles/json.dir/json_st.cc.o"
+  "/home/sp/SeniorProject/dataset_reader/json++/lex.yy.cc" "/home/sp/SeniorProject/dataset_reader/json++/CMakeFiles/json.dir/lex.yy.cc.o"
   )
 SET(CMAKE_CXX_COMPILER_ID "GNU")
 

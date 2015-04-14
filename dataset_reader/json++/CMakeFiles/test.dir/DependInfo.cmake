@@ -4,13 +4,13 @@ SET(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 SET(CMAKE_DEPENDS_CHECK_CXX
-  "/home/brenemal/spws/dataset_reader/json++/test.cc" "/home/brenemal/spws/dataset_reader/json++/CMakeFiles/test.dir/test.cc.o"
+  "/home/sp/SeniorProject/dataset_reader/json++/test.cc" "/home/sp/SeniorProject/dataset_reader/json++/CMakeFiles/test.dir/test.cc.o"
   )
 SET(CMAKE_CXX_COMPILER_ID "GNU")
 
 # Targets to which this target links.
 SET(CMAKE_TARGET_LINKED_INFO_FILES
-  "/home/brenemal/spws/dataset_reader/json++/CMakeFiles/json.dir/DependInfo.cmake"
+  "/home/sp/SeniorProject/dataset_reader/json++/CMakeFiles/json.dir/DependInfo.cmake"
   )
 
 # The include file search paths:

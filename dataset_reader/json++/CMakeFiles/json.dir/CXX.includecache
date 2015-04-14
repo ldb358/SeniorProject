@@ -6,13 +6,13 @@
 
 #IncludeRegexTransform: 
 
-/home/brenemal/spws/dataset_reader/json++/code_point_to_utf8.hh
+/home/sp/SeniorProject/dataset_reader/json++/code_point_to_utf8.hh
 stdexcept
 -
 string
 -
 
-/home/brenemal/spws/dataset_reader/json++/json.tab.cc
+/home/sp/SeniorProject/dataset_reader/json++/json.tab.cc
 iostream
 -
 cstring
@@ -22,11 +22,11 @@ stdio.h
 stdexcept
 -
 unescape.hh
-/home/brenemal/spws/dataset_reader/json++/unescape.hh
+/home/sp/SeniorProject/dataset_reader/json++/unescape.hh
 json_st.hh
-/home/brenemal/spws/dataset_reader/json++/json_st.hh
+/home/sp/SeniorProject/dataset_reader/json++/json_st.hh
 json_st.hh
-/home/brenemal/spws/dataset_reader/json++/json_st.hh
+/home/sp/SeniorProject/dataset_reader/json++/json_st.hh
 stddef.h
 -
 libintl.h
@@ -42,19 +42,19 @@ stdlib.h
 stdio.h
 -
 
-/home/brenemal/spws/dataset_reader/json++/json.tab.hh
+/home/sp/SeniorProject/dataset_reader/json++/json.tab.hh
 json_st.hh
-/home/brenemal/spws/dataset_reader/json++/json_st.hh
+/home/sp/SeniorProject/dataset_reader/json++/json_st.hh
 
-/home/brenemal/spws/dataset_reader/json++/json_st.cc
+/home/sp/SeniorProject/dataset_reader/json++/json_st.cc
 json_st.hh
-/home/brenemal/spws/dataset_reader/json++/json_st.hh
+/home/sp/SeniorProject/dataset_reader/json++/json_st.hh
 stdexcept
 -
 string
 -
 
-/home/brenemal/spws/dataset_reader/json++/json_st.hh
+/home/sp/SeniorProject/dataset_reader/json++/json_st.hh
 iostream
 -
 map
@@ -64,7 +64,7 @@ vector
 stack
 -
 
-/home/brenemal/spws/dataset_reader/json++/lex.yy.cc
+/home/sp/SeniorProject/dataset_reader/json++/lex.yy.cc
 stdio.h
 -
 string.h
@@ -78,15 +78,15 @@ inttypes.h
 string
 -
 json.tab.hh
-/home/brenemal/spws/dataset_reader/json++/json.tab.hh
+/home/sp/SeniorProject/dataset_reader/json++/json.tab.hh
 unistd.h
 -
 
-/home/brenemal/spws/dataset_reader/json++/unescape.hh
+/home/sp/SeniorProject/dataset_reader/json++/unescape.hh
 stdexcept
 -
 string
 -
 code_point_to_utf8.hh
-/home/brenemal/spws/dataset_reader/json++/code_point_to_utf8.hh
+/home/sp/SeniorProject/dataset_reader/json++/code_point_to_utf8.hh
 
