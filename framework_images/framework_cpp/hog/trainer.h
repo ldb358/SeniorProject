@@ -10,12 +10,12 @@
 #include "includes/FileReader.h"
 #include "includes/SampleDetector.h"
 #include "includes/LinearSVM.h"
-#include "../dataset_reader/DsReader.h"
+#include "../../../dataset_reader/DsReader.h"
 #include "includes/helper.h"
 using namespace std;
 using namespace cv;
 
 #define NUM_THREADS 4
-#define STEP_SIZE 12
+#define STEP_SIZE 10
 #define CLASS "stopsign"
-
+//#define CLASS "puck"

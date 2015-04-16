@@ -1,5 +1,5 @@
-jsondir=../dataset_reader/json++
-includes=includes/FileReader.o includes/SampleDetector.o includes/helper.o ../dataset_reader/DsReader.o includes/LinearSVM.o
+jsondir=../../../dataset_reader/json++
+includes=includes/FileReader.o includes/SampleDetector.o includes/helper.o ../../../dataset_reader/DsReader.o includes/LinearSVM.o
 detect_includes=includes/SampleDetector.o includes/helper.o 
 libs=-L $(jsondir)/ -l json
 opencv=`pkg-config --cflags --libs opencv`
@@ -21,7 +21,7 @@ libhogdetect.so: detector.cpp $(detect_includes)
 includes/FileReader.o: includes/FileReader.cpp
 	g++ -c includes/FileReader.cpp -o includes/FileReader.o
 
-../dataset_reader/DsReader.o: ../dataset_reader/DsReader.cpp
+../../../dataset_reader/DsReader.o: ../../../dataset_reader/DsReader.cpp
 	g++ -std=c++11 -c ../dataset_reader/DsReader.cpp -o ../dataset_reader/DsReader.o
 
 includes/LinearSVM.o: includes/LinearSVM.cpp
@@ -41,11 +41,15 @@ $(jsondir)/libjson.a:
 rover: trainer
 	touch puck.yaml
 	rm puck.yaml
+	-rm -f /var/www/training_tests/*
+	-rm -f /var/www/fn/*
 	./trainer tagger.json ~/test_images/rover/puck.txt puck.yaml
 
 stop: trainer
 	touch stopsign.yaml
 	rm stopsign.yaml
+	-rm -f /var/www/training_tests/*
+	-rm -f /var/www/fn/*
 	./trainer ~/test_images/400x300/tags_final.json ~/test_images/400x300/stopsign.txt stopsign.yaml
 
 clean:
