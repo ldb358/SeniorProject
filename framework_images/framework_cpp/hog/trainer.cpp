@@ -219,13 +219,14 @@ int main(int argc, char**argv){
     cout << "Total Accuracy: " << (((float)(total_p-fp)+(total_n-fn))/total)*100 <<  "%" << endl;
     cout << "False Pos: " << fp << " (" << ((float)fp/total_n)*100.0 << "% of all non-stopsigns)" << endl;
     cout << "False Neg: " << fn << " (" << ((float)fn/total_p)*100.0 << "% of all stopsigns)" << endl;
+    //save the svm to output file
+    svm->save(argv[3]);
+    cout << argv[3] << " written " << endl;
     while(detect.cur_threads() > 0){
 	detect.kill_thread();
     }
     for(int i=0; i < NUM_THREADS; ++i){
 	pthread_join(threads[i], (void**)NULL);
     } 
-    //save the svm to output file
-    svm->save(argv[3]);
     exit(0);
 }

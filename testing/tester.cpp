@@ -20,6 +20,12 @@ int main(int argc, char**argv){
 
     int pos_matches = 0;
     int neg_matches = 0;
+    int fp = 0;
+    int fn = 0;
+    int tp = 0;
+    int tn = 0;
+    int total_p = 0;
+    int total_n = 0;
     double total_exec_time = 0.0;
     int cur = 0;
     myfile << "Run Time" << "," << "Correctness" << endl;
@@ -56,9 +62,24 @@ int main(int argc, char**argv){
                 ispos = 1;
             }
         }
-        if(ispos == status){
+        if(ispos){
+	    total_p++;
+	}else{
+	    total_n++;
+	}
+        if((ispos && status) || !(ispos || status)){
             pos_matches++;
+            if(ispos){
+		tp++;
+	    }else{
+		tn++;
+	    }
         }else{
+            if(!ispos){
+		fp++;
+	    }else{
+		fn++;
+	    }
             neg_matches++;
         }
         cout << "Testing with image " << cur << " Expected:" << (ispos? "pos" : "neg")
@@ -66,9 +87,19 @@ int main(int argc, char**argv){
         myfile << delta_t << "," << ((status==ispos)? "correct" : "incorrect") << endl;
     }
     myfile << "Number of Samples" << "," << "Total run time(seconds)" << "," 
-        << "average time per image(seconds)" << "," << "total correct" << "," 
-        << "total false positive" << "," << "percentage correct" << endl;
+        << "average time per image(seconds)" << "," 
+        << "total correct" << "," << "%" << ","
+        << "total true positives" << "," << "% of positive images correct" << ","
+        << "total true negatives" << "," << "% of negative images correct" << ","
+        << "total false positive" << "," << "% of negative images misclassified" << "," 
+        << "total false negative" << "," << "% of positive images misclassified" << ","
+        << endl;
     myfile << cur << "," << total_exec_time << "," 
-        << (total_exec_time/cur) << "," << pos_matches << "," 
-        << neg_matches  << "," << ((float)pos_matches/cur)*100 << endl;
+        << (total_exec_time/cur) << "," 
+        << pos_matches << "," << (((float)pos_matches)/cur)*100 << ","
+        << tp  << "," << (((float)tp)/total_p)*100  << ","
+        << tn << "," << (((float)tn)/total_n)*100 << ","
+        << fp << "," << (((float)fp)/total_p)*100 << "," 
+        << fn << "," << (((float)fn)/total_n)*100 << ","
+	<< endl; 
 }

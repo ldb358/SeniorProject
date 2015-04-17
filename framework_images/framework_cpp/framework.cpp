@@ -20,32 +20,32 @@ int processImage(Mat Img) {
 }*/
 
 int main(int argc, char *argv[]) {
-	if (argc < 2) {
-		cout << "Usage: framework image_file" << endl;
-		exit(EXIT_FAILURE);
-	}
-	int render = 0;
-	int sign = 0;
+    if (argc < 2) {
+	cout << "Usage: framework image_file" << endl;
+	exit(EXIT_FAILURE);
+    }
+    int render = 0;
+    int sign = 0;
 #ifndef RENDER
     if(argc == 3){
-        render = 1;
+	render = 1;
     }
 #else
     render = 1;
 #endif
-	// load image data  
-	Mat img = imread(argv[1], CV_LOAD_IMAGE_COLOR);
+    // load image data  
+    Mat img = imread(argv[1], CV_LOAD_IMAGE_COLOR);
 
-	// perform sign recognition
-	sign = processImage(img);
-
-	// display image
+    // perform sign recognition
+    sign = processImage(img);
+    
+    // display image/
     if(render){
-        imshow("opencvtest", img);
-        // show results of sign recognition algorithm
-        sign ? cout << "This is a stop sign.\n" << endl : cout << "This is not a stop sign.\n" << endl;
-        waitKey(0);
+	// show results of sign recognition algorithm
+	sign ? cout << "This is a stop sign.\n" << endl : cout << "This is not a stop sign.\n" << endl;
+	imshow("opencvtest", img);
+	waitKey(0);
     }
-	return sign;
+    return sign;
 }
 

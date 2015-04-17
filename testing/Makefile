@@ -10,5 +10,5 @@ tester: tester.cpp $(includes)
 ../dataset_reader/DsReader.o: ../dataset_reader/DsReader.cpp
 	g++ -std=c++11 -c ../dataset_reader/DsReader.cpp -o ../dataset_reader/DsReader.o
 
-test:
+test: tester
 	./tester ../../test_images/400x300/tags_final.json test_results.csv ../framework_images/framework_cpp/framework  

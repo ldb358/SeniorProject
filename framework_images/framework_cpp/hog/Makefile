@@ -17,6 +17,9 @@ libhogdetect.so: detector.cpp $(detect_includes)
 	g++ -fPIC -c includes/helper.cpp -o includes/helper.o
 	g++ -shared -o libhogdetect.so detector.o $(detect_includes) $(cuda) $(opencv)
 
+detect: detector.cpp $(detect_includes)
+	g++ -g -pthread -std=c++11 -c -o detector.o detector.cpp
+
 
 includes/FileReader.o: includes/FileReader.cpp
 	g++ -c includes/FileReader.cpp -o includes/FileReader.o
@@ -46,8 +49,7 @@ rover: trainer
 	./trainer tagger.json ~/test_images/rover/puck.txt puck.yaml
 
 stop: trainer
-	touch stopsign.yaml
-	rm stopsign.yaml
+	rm -f stopsign.yaml
 	-rm -f /var/www/training_tests/*
 	-rm -f /var/www/fn/*
 	./trainer ~/test_images/400x300/tags_final.json ~/test_images/400x300/stopsign.txt stopsign.yaml

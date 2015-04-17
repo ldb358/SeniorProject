@@ -9,16 +9,13 @@
 #include<opencv2/ml/ml.hpp>
 #include "includes/SampleDetector.h"
 #include "includes/helper.h"
+#include "includes/LinearSVM.h"
 using namespace std;
 using namespace cv;
 
-#define NUM_THREADS 4
-#define STEP_SIZE 8
-#define WINDOW_WIDTH 64
-#define WINDOW_HEIGHT 128
-#define MODEL "/home/brenemal/spws/hog/stopsign.yaml" 
+#define MODEL "stopsign.yaml" 
 
 #ifndef procimg
 #define procimg
-int processImage(Mat img);
+int processImage(Mat &img);
 #endif

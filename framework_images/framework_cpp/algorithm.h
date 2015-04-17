@@ -12,4 +12,4 @@ using namespace cv;
 * 	1 - image contains stop sign
 * 	0 - image does not contain stop sign
 */
-int processImage(Mat img);
+int processImage(Mat &img);
