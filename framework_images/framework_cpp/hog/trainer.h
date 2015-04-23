@@ -16,6 +16,7 @@ using namespace std;
 using namespace cv;
 
 #define NUM_THREADS 4
-#define STEP_SIZE 10
+//#define STEP_SIZE 10
+#define STEP_SIZE 20
 #define CLASS "stopsign"
 //#define CLASS "puck"

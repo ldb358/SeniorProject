@@ -12,3 +12,6 @@ tester: tester.cpp $(includes)
 
 test: tester
 	./tester ../../test_images/400x300/tags_final.json test_results.csv ../framework_images/framework_cpp/framework  
+
+test_large: tester
+	./tester ../../test_images/1mpx/tags.json test_results_large.csv ../framework_images/framework_cpp/framework

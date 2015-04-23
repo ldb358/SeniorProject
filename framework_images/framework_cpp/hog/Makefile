@@ -54,5 +54,13 @@ stop: trainer
 	-rm -f /var/www/fn/*
 	./trainer ~/test_images/400x300/tags_final.json ~/test_images/400x300/stopsign.txt stopsign.yaml
 
+large: trainer
+	rm -f stopsign.yaml
+	-rm -f /var/www/training_tests/*
+	-rm -f /var/www/fn/*
+	./trainer ~/test_images/1mpx/tags.json ~/test_images/1mpx/stopsign.txt stopsign.yaml -c 100 -e 1e-6 -i 450 -o .5 -s 1.10 -r 5
+
+
+
 clean:
 	rm *.o trainer includes/*.o

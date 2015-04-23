@@ -1,11 +1,52 @@
 #include "trainer.h"
+#include<unistd.h>
 
 using namespace cv;
 using namespace std;
 
 int main(int argc, char**argv){
+    double c = 100;
+    double epi = 1e-6;
+    int iter = 450;
+    double overlap_thresh = .5;
+    double scale = 1.10;
+    int rects = 5;
+    int opt;
+    while((opt = getopt(argc-4, &argv[3], "c:e:i:o:s:r:")) != -1){
+    	switch(opt){
+	    case 'c':
+		c = atof(optarg);
+	    break;
+	    case 'e':
+		epi = atof(optarg);
+	    break;
+	    case 'i':
+		iter = atoi(optarg);
+	    break;
+	    case 'o':
+		overlap_thresh = atof(optarg);
+		if(overlap_thresh > 1 || overlap_thresh < 0){
+		    cout << "Overlap thresh must be between 0 and 1..." << endl;
+		    return 1;
+		}
+	    break;
+	    case 's':
+		scale = atof(optarg);
+	    break;
+	    case 'r':
+		rects =  atoi(optarg);
+	    break;	
+	}
+    }
     if(argc < 4){
-	cout << "usage: [json file for tags] [file with list of images for training ] [file to save model to]"
+	cout << "usage: [json file for tags] [file with list of images for training ] [file to save model to] [flags]" << endl
+	    << "flags:" << endl
+	    << "-c [double]: set the c value for the svm" << endl
+	    << "-e [double]: set the epsilon for the svm" << endl
+	    << "-i [double]: set the number of interations that we can train for the svm" << endl
+	    << "-o [double < 1] set the amount that a rectangle has to overlap with a tag to be a match" << endl
+	    << "-s [double]: How much to scale the image for multdetect" << endl
+	    << "-r [int]: set the number of rects to justify a match" << endl
 	    << endl;
 	return -1;
     }
@@ -51,11 +92,13 @@ int main(int argc, char**argv){
     CvSVMParams params;
     params.svm_type    = CvSVM::C_SVC;
     params.kernel_type = CvSVM::LINEAR;
-    params.term_crit   = cvTermCriteria(CV_TERMCRIT_ITER, 250, 1e-10);
-    params.C = 200;
+    params.term_crit   = cvTermCriteria(CV_TERMCRIT_ITER, iter, epi);
+    params.C = c;
     
     LinearSVM *svm = new LinearSVM;
     svm->train(training_mat, training_label, Mat(), Mat(), params);
+    training_mat.release();
+    training_label.release();
     DsReader dataset(argv[1]);
     if(!dataset.data_exists()){
 	cout << "Error: " << argv[1] << " doesn't exist! Cannot test svm." << endl;
@@ -108,7 +151,7 @@ int main(int argc, char**argv){
 					  img_data.tags[n].scale);
 		
 		float ratio = ((float)overlap)/tag_area; 
-		if(ratio > .5){
+		if(ratio > overlap_thresh){
 		    ispos = true;
 		    //perform non-max supression and add as positive samples
 		    pos_img = 1;
@@ -122,6 +165,7 @@ int main(int argc, char**argv){
 		labels.push_back(-1.0);
 	    }
 	}
+	img.release();	
 	detect.clear();
 	//divides the dataset into two parts, training and testing
 	if(cur > 70) break;
@@ -131,8 +175,6 @@ int main(int argc, char**argv){
     cout << positive_count << " Positve, " << negative_count << " Negative " << ((float)positive_count/negative_count) << "+/-" << endl;
     //retrain the svm with the expanded sample set
     //convert training vector to a mat
-    training_mat.release();
-    training_label.release();
     cout << "going from vector to mat" << endl;
     Mat retraining_mat(training_data.size(), training_data[0].size(), CV_32FC1);
     for(int i=0; i < retraining_mat.rows; ++i){
@@ -177,7 +219,7 @@ int main(int argc, char**argv){
 	//create the vector to hold the results
 	vector<Rect> matches;
 	//perform the multiscale match(on the gpu)
-	gdesc.detectMultiScale(gimg, matches, 0, Size(), Size(0, 0), 1.04, 2);
+	gdesc.detectMultiScale(gimg, matches, 0, Size(), Size(0, 0), scale, rects);
 	for(int i=0; i < matches.size(); ++i){
 	    rectangle(img, matches[i], Scalar(255, 0, 0));		
 	}
@@ -193,8 +235,8 @@ int main(int argc, char**argv){
 	}
 	total++;
 	if(matches.size() > 0){
-	    //putText(img, string(img_data.path), cvPoint(30,30), 
-	    //    FONT_HERSHEY_COMPLEX_SMALL, 0.4, cvScalar(200,200,250), 1, CV_AA);
+	    putText(img, string(img_data.path), cvPoint(30,30), 
+	        FONT_HERSHEY_COMPLEX_SMALL, 0.4, cvScalar(200,200,250), 1, CV_AA);
 	    imwrite("/var/www/training_tests/"+to_string(cur)+".jpg", img);
 	    cout << "writing image: " << "/var/www/training_tests/"+to_string(cur)+".jpg" << endl;
 	    if(ispos){
