@@ -1,15 +1,22 @@
 jsondir=../../../dataset_reader/json++
 includes=includes/FileReader.o includes/SampleDetector.o includes/helper.o ../../../dataset_reader/DsReader.o includes/LinearSVM.o
-detect_includes=includes/SampleDetector.o includes/helper.o 
+detect_includes=includes/LinearSVM.o 
 libs=-L $(jsondir)/ -l json
 opencv=`pkg-config --cflags --libs opencv`
 cuda=-L /usr/local/cuda/lib/
-default: trainer
+default: trainer server
 
 
 trainer: trainer.cpp $(includes)
 	g++ -g -pthread -std=c++11 -c -o trainer.o trainer.cpp
 	g++ -g -std=c++11 trainer.o $(includes) $(libs) $(cuda) -Wall -o trainer $(opencv) 
+
+
+server: detector_server.cpp $(detect_includes)
+	g++ -g -pthread -std=c++11 -c -o detector_server.o detector_server.cpp
+
+
+
 
 libhogdetect.so: detector.cpp $(detect_includes)
 	g++ -g -pthread -std=c++11 -fPIC -c -o detector.o detector.cpp 
