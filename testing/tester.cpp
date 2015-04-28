@@ -93,6 +93,7 @@ int main(int argc, char**argv){
         << "total true negatives" << "," << "% of negative images correct" << ","
         << "total false positive" << "," << "% of negative images misclassified" << "," 
         << "total false negative" << "," << "% of positive images misclassified" << ","
+	<< "Recall" << "," << "Precision" << ","
         << endl;
     myfile << cur << "," << total_exec_time << "," 
         << (total_exec_time/cur) << "," 
@@ -101,5 +102,7 @@ int main(int argc, char**argv){
         << tn << "," << (((float)tn)/total_n)*100 << ","
         << fp << "," << (((float)fp)/total_p)*100 << "," 
         << fn << "," << (((float)fn)/total_n)*100 << ","
+	<< (((float)tp)/(tp+fn)) << ","
+	<< (((float)tp)/(fp+tp)) << ","
 	<< endl; 
 }
