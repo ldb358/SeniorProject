@@ -20,7 +20,7 @@ struct DsPos{
 
 struct DsTag{
     struct DsPos pos;
-    double scale;
+    float scale;
     int clss;
 };
 

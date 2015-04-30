@@ -72,8 +72,7 @@ void DsReader::next(struct DsImage &imgdata){
             int_pos[j] = pos[j].as_int();
         }
         tag.pos = temp_pos;
-
-        tag.scale = tags[i]["scale"].as_float();
+        tag.scale = atof(tags[i]["scale"].as_string().c_str());
         tag.clss = tags[i]["class"].as_int();
     }
     imgdata.tags.push_back(tag);

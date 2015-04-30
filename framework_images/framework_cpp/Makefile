@@ -38,6 +38,13 @@ framework: alg.o algorithm.h framework.cpp
 alg.o:	alg.cpp algorithm.h
 	g++ `pkg-config --cflags opencv` -g -c alg.cpp  
 
+alg_combine.o:	alg_combine.cpp 
+	g++ -g -std=c++11 -c alg_combine.cpp
+
+alg_combine: alg_combine.o algorithm.h
+	g++ -g -c framework.cpp
+	g++ -g -Wall -o framework alg_combine.o framework.o $(opencv) $(cuda) 
+
 clean:
 	rm -f framework framework_exec dummyalg alg.o
 
