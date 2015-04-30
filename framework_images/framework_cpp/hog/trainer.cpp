@@ -4,6 +4,69 @@
 using namespace cv;
 using namespace std;
 
+
+float hn_train(DsReader &dataset, LinearSVM *svm, vector< vector<float> > &training_data, 
+		    vector<float> &labels, string type, float scale, float rects){
+    struct DsImage img_data;
+    dataset.reset();
+    vector<float> support_vector;
+    svm->getSupportVector(support_vector);
+    HOGDescriptor gdesc;
+    gdesc.setSVMDetector(support_vector);
+
+    int pos_image = 0;
+    int cur = 0;
+    while(dataset.has_next()){
+	//increment the image counter
+	cur++;
+	//load the next image info into the img_data struct
+	dataset.next(img_data);
+	//load the image
+	Mat img = imread(img_data.path, 0);	
+	//if the image is empty(it doesnt exist) skip it
+	if(img.cols == 0) 
+		continue;
+	//upload the image to the gpu for detection
+	//create the vector to hold the results
+	vector<Rect> matches;
+	//perform the multiscale match(on the gpu)
+	gdesc.detectMultiScale(img, matches, 0, Size(), Size(0, 0), scale, rects);	
+	
+	//set the default state to the image should be negative
+	for(int i=0; i < matches.size(); ++i){
+	    int ispos = 0;
+	    for(int n=0; n < img_data.tags.size() ; ++n){
+		string cls = dataset.get_class(img_data.tags[n].clss);
+		if(cls == type)
+		    continue;
+		int width = dataset.tag_width()*img_data.tags[n].scale;
+		int height = dataset.tag_height()*img_data.tags[n].scale;	
+		Rect tag(img_data.tags[n].pos.x, img_data.tags[n].pos.y, 
+			    width, height);	
+		Rect overlap = matches[i] & tag;
+		if(overlap.area()/tag.area() > .5){
+		    ispos = 1;
+		}
+	    }
+	    //first check if this tag is even the right type of object
+	    if(!ispos){	
+		vector<float> ders;
+		matches[i].width = min(img.cols-matches[i].x, matches[i].width);
+		matches[i].height = min(img.rows-matches[i].y, matches[i].height);
+		gdesc.compute(img(matches[i]), ders);	
+		training_data.push_back(ders);
+		labels.push_back(-1.0);
+	    }else{
+		pos_image++;
+	    }
+	}
+	cout << "\rTraining with image " << cur << "/" << dataset.size() << flush;
+    }
+    cout << "test" << endl;
+    return pos_image/dataset.size();
+}
+
+
 int main(int argc, char**argv){
     double c = 100;
     double epi = 1e-6;
@@ -103,7 +166,7 @@ int main(int argc, char**argv){
     if(!dataset.data_exists()){
 	cout << "Error: " << argv[1] << " doesn't exist! Cannot test svm." << endl;
     }
-
+    
     struct DsImage img_data;
     //loop over all the images in the data set
     int cur =0;
@@ -123,6 +186,7 @@ int main(int argc, char**argv){
 	}
     }
     pthread_attr_destroy(&attr);
+    /*
     while(dataset.has_next()){
 	cur++;
 	dataset.next(img_data);
@@ -170,25 +234,27 @@ int main(int argc, char**argv){
 	//divides the dataset into two parts, training and testing
 	if(cur > 70) break;
 	cout << "image " << cur << "/" << dataset.size() << " Status:" << pos_img <<  endl;
-    }
-    //print the pos and neg counts and percentages
-    cout << positive_count << " Positve, " << negative_count << " Negative " << ((float)positive_count/negative_count) << "+/-" << endl;
-    //retrain the svm with the expanded sample set
-    //convert training vector to a mat
-    cout << "going from vector to mat" << endl;
-    Mat retraining_mat(training_data.size(), training_data[0].size(), CV_32FC1);
-    for(int i=0; i < retraining_mat.rows; ++i){
-	for(int j=0; j < retraining_mat.cols; ++j){
-	    retraining_mat.at<float>(i, j) = training_data.at(i).at(j);
+    }*/
+    for(int i=0; i < 5; ++i){
+	cout << "Running iteration:" << i << endl;
+	float ratio  = hn_train(dataset, svm, training_data, labels, type, scale, rects);
+	cout << "fp:tp - " << ratio << endl;
+	//retrain the svm with the expanded sample set
+	//convert training vector to a mat
+	cout << "going from vector to mat" << endl;
+	Mat retraining_mat(training_data.size(), training_data[0].size(), CV_32FC1);
+	for(int i=0; i < retraining_mat.rows; ++i){
+	    for(int j=0; j < retraining_mat.cols; ++j){
+		retraining_mat.at<float>(i, j) = training_data.at(i).at(j);
+	    }
 	}
+	//convert the label vector to a mat
+	Mat retraining_label(labels.size(), 1, CV_32FC1);
+	flv2mat(labels, retraining_label);
+	cout << "retraining" << endl;
+	//retrain with the false positives
+	svm->train(retraining_mat, retraining_label, Mat(), Mat(), params);
     }
-    //convert the label vector to a mat
-    Mat retraining_label(labels.size(), 1, CV_32FC1);
-    flv2mat(labels, retraining_label);
-    cout << "retraining" << endl;
-    //retrain with the false positives
-    svm->train(retraining_mat, retraining_label, Mat(), Mat(), params);
-
     positive_count = 0;
     negative_count = 0;
     int fp = 0;
@@ -196,7 +262,7 @@ int main(int argc, char**argv){
     int fn = 0;
     int total_n = 0;
     int total = 0;
-    //dataset.reset();
+    dataset.reset();
 
     vector<float> support_vector;
     svm->getSupportVector(support_vector);

@@ -37,7 +37,7 @@ includes/FileReader.o: includes/FileReader.cpp
 	g++ -c includes/FileReader.cpp -o includes/FileReader.o
 
 ../../../dataset_reader/DsReader.o: ../../../dataset_reader/DsReader.cpp
-	g++ -std=c++11 -c ../dataset_reader/DsReader.cpp -o ../dataset_reader/DsReader.o
+	g++ -std=c++11 -c ../../../dataset_reader/DsReader.cpp -o ../../../dataset_reader/DsReader.o
 
 includes/LinearSVM.o: includes/LinearSVM.cpp
 	g++ -c includes/LinearSVM.cpp -o includes/LinearSVM.o
@@ -70,7 +70,7 @@ large: trainer
 	rm -f stopsign.yaml
 	-rm -f /var/www/training_tests/*
 	-rm -f /var/www/fn/*
-	./trainer ~/test_images/1mpx/tags.json ~/test_images/1mpx/stopsign.txt stopsign.yaml -c 100 -e 1e-6 -i 450 -o .5 -s 1.10 -r 5
+	./trainer ~/SeniorProject/tags/tags_float.json ~/test_images/1mpx/stopsign.txt stopsign.yaml -c 100 -e 1e-6 -i 450 -o .5 -s 1.10 -r 5
 
 
 
