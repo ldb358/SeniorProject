@@ -7,7 +7,7 @@ Ptr<FeatureDetector> detector = new SurfFeatureDetector(20);
 Ptr<DescriptorExtractor> desc_extr = DescriptorExtractor::create("SURF");
 
 int processImage(Mat img){	
-	cv::initModule_nonfree();
+	//cv::initModule_nonfree();
 
 	//keypoint matcher
 	Ptr<DescriptorMatcher> matcher = DescriptorMatcher::create("FlannBased");

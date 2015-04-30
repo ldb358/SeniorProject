@@ -4,7 +4,7 @@ detect_includes=includes/LinearSVM.o
 libs=-L $(jsondir)/ -l json
 opencv=`pkg-config --cflags --libs opencv`
 cuda=-L /usr/local/cuda/lib/
-default: trainer server
+default: trainer server client
 
 
 trainer: trainer.cpp $(includes)
@@ -14,6 +14,11 @@ trainer: trainer.cpp $(includes)
 
 server: detector_server.cpp $(detect_includes)
 	g++ -g -pthread -std=c++11 -c -o detector_server.o detector_server.cpp
+	g++ -g -pthread -std=c++11 detector_server.o $(detect_includes) $(cuda) $(opencv) -Wall -o detect_server
+
+
+client: detector_client.cpp
+	g++ -g -pthread -std=c++11 -c -o detector_client.o detector_client.cpp
 
 
 

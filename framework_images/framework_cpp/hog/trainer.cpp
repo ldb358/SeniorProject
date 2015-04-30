@@ -209,7 +209,9 @@ int main(int argc, char**argv){
 	//load the next image info into the img_data struct
 	dataset.next(img_data);
 	//load the image
-	Mat img = imread(img_data.path, 0);	
+	Mat cimg = imread(img_data.path, 1);	
+	Mat img;
+	cvtColor(cimg, img, CV_BGR2GRAY);
 	//if the image is empty(it doesnt exist) skip it
 	if(img.cols == 0) 
 		continue;
@@ -221,7 +223,7 @@ int main(int argc, char**argv){
 	//perform the multiscale match(on the gpu)
 	gdesc.detectMultiScale(gimg, matches, 0, Size(), Size(0, 0), scale, rects);
 	for(int i=0; i < matches.size(); ++i){
-	    rectangle(img, matches[i], Scalar(255, 0, 0));		
+	    rectangle(cimg, matches[i], Scalar(255, 0, 0), 4);		
 	}
 	
 	//set the default state to the image should be negative
@@ -235,9 +237,9 @@ int main(int argc, char**argv){
 	}
 	total++;
 	if(matches.size() > 0){
-	    putText(img, string(img_data.path), cvPoint(30,30), 
-	        FONT_HERSHEY_COMPLEX_SMALL, 0.4, cvScalar(200,200,250), 1, CV_AA);
-	    imwrite("/var/www/training_tests/"+to_string(cur)+".jpg", img);
+	    //putText(img, string(img_data.path), cvPoint(30,30), 
+	    //    FONT_HERSHEY_COMPLEX_SMALL, 0.4, cvScalar(200,200,250), 1, CV_AA);
+	    imwrite("/var/www/training_tests/"+to_string(cur)+".jpg", cimg);
 	    cout << "writing image: " << "/var/www/training_tests/"+to_string(cur)+".jpg" << endl;
 	    if(ispos){
 		total_p++;
@@ -249,7 +251,7 @@ int main(int argc, char**argv){
 	}else{
 	    if(ispos){
 	    	total_p++;
-		imwrite("/var/www/fn/"+to_string(cur)+".jpg", img);
+		imwrite("/var/www/fn/"+to_string(cur)+".jpg", cimg);
 		fn++;
 	    }else{
 		total_n++;

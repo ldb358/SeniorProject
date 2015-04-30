@@ -2,6 +2,13 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <stdexcept>
+
+#include<sys/types.h>
+#include<sys/socket.h>
+#include<stdlib.h>
+#include<unistd.h>
+#include<netinet/in.h>
 
 #include<opencv2/core/core.hpp>
 #include<opencv2/imgproc/imgproc.hpp>
@@ -16,14 +23,30 @@ using namespace cv;
 
 #define MODEL "stopsign.yaml" 
 
+struct img_packet{
+    int cols;
+    int rows;
+};
 
 class DetectorServer{
     private:
-    	//the svm we use for recognition
+    	/*
+    	 * Variables for object recognition
+    	 */
 	LinearSVM svm;
 	gpu::HOGDescriptor desc;
-    	int img_count = 0;
+    	int img_count = 0; 
+	
+	/*
+	 * variables for the socket server
+	 */
+	int sockfd;
+	int portno = 9622;
+
+    	void start_socket();	
     public:
 	int processImage(Mat &img);
+	void wait_for_connections();
 	DetectorServer();
 };
+

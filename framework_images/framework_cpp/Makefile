@@ -8,6 +8,10 @@ default: alg.o framework
 bow/detect.o: bow/detect.cpp
 	g++ -g -std=c++11 -c -o bow/detect.o bow/detect.cpp
 
+hog/detector_client.o: hog/detector.cpp
+	g++ -g -std=c++11 -c -o hog/detector_client.o hog/detector_client.cpp
+
+
 hog/detect.o: hog/detector.cpp
 	g++ -g -std=c++11 -c -o hog/detect.o hog/detector.cpp
 
@@ -19,8 +23,12 @@ hog: hog/detect.o framework.o
 	g++ -g -c -o framework.o framework.cpp 
 	g++ -g framework.o hog/detect.o $(detect_includes) -Wall -o framework $(opencv) $(cuda)
 
+hog_server: hog/detector_client.o
+	g++ -g -c -o framework.o framework.cpp
+	g++ -g framework.o hog/detector_client.o $(detect_includes) -Wall -o framework $(opencv) $(cuda)
 
-test: hog
+
+test: hog_server
 	-./framework pos_sample.jpg 
 	-./framework neg_sample.jpg
 
