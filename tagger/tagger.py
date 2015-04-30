@@ -113,7 +113,7 @@ class Tag(object):
     def jsonable(self):
         jsondict = { 
             "pos": [self.y, self.x], #invert it since python is backwards
-            "scale": self.scale,
+            "scale": str(self.scale),
             "class": self.clss
         }
         return jsondict
