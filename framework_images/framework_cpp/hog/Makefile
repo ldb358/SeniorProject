@@ -64,13 +64,13 @@ stop: trainer
 	rm -f stopsign.yaml
 	-rm -f /var/www/training_tests/*
 	-rm -f /var/www/fn/*
-	./trainer ~/test_images/400x300/tags_final.json ~/test_images/400x300/stopsign.txt stopsign.yaml
+	./trainer ~/test_images/400x300/tags_final.json ~/test_images/400x300/stopsign.txt stopsign.yaml -c 400 -e 1e-6 -i 400 -o .5 -s 1.01 -r 5
 
 large: trainer
 	rm -f stopsign.yaml
 	-rm -f /var/www/training_tests/*
 	-rm -f /var/www/fn/*
-	./trainer ~/SeniorProject/tags/tags_float.json ~/test_images/1mpx/stopsign.txt stopsign.yaml -c 100 -e 1e-6 -i 450 -o .5 -s 1.10 -r 5
+	./trainer ~/SeniorProject/tags/tags_float.json ~/test_images/1mpx/stopsign.txt stopsign.yaml -c 200 -e 1e-6 -i 450 -o .5 -s 1.10 -r 5
 
 
 

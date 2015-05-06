@@ -1,5 +1,5 @@
 // Combined Algorithm 2 and 5: Color Detection and Shape Detection
-//#include "algorithm.h"
+#include "alg_combine.h"
 #include <opencv2/highgui/highgui.hpp>
 #include "opencv2/imgproc/imgproc.hpp"
 #include <iostream>
@@ -17,7 +17,6 @@
 using namespace cv;
 using namespace std;
 
-int processImage(Mat &img);
 int shapeDetect(Mat img);
 Mat colorDetect(Mat imgHSV, Scalar low, Scalar high);
 Scalar getFrac(Mat imgThresholded);
@@ -129,6 +128,6 @@ Mat colorDetect(Mat imgHSV, Scalar lowV, Scalar highV) {
 Scalar getFrac(Mat imgThresholded) {
 	Scalar psum = sum(imgThresholded) / 255.0;
 	Scalar frac = (psum) / (1.0 * WIDTH * HEIGHT);
-	cout << "Percentage Red: " << frac[0] << endl;
+//	cout << "Percentage Red: " << frac[0] << endl;
 	return frac;
 }

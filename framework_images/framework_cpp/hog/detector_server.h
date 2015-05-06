@@ -34,7 +34,9 @@ class DetectorServer{
     	 * Variables for object recognition
     	 */
 	LinearSVM svm;
+	LinearSVM small_svm;
 	gpu::HOGDescriptor desc;
+	gpu::HOGDescriptor small_desc;
     	int img_count = 0; 
 	
 	/*

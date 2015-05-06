@@ -15,3 +15,11 @@ test: tester
 
 test_large: tester
 	./tester ../../test_images/1mpx/tags.json test_results_large.csv ../framework_images/framework_cpp/framework
+
+test_alg_combine: tester
+	./tester ../../test_images/400x300/tags_final.json alg_combine.csv ../framework_images/framework_cpp/framework  
+
+test_alg_combine_large: tester
+	./tester ../../test_images/1mpx/tags.json test_alg_combine_large.csv ../framework_images/framework_cpp/framework
+
+

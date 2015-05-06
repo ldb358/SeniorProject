@@ -7,13 +7,17 @@
  */
 DetectorServer::DetectorServer(){
     //load the model used to classify
-    svm.load("/home/sp/SeniorProject/models/stopsign.yaml"); 
+    svm.load("/home/sp/SeniorProject/models/stopsign_3.yaml"); 
     //convert the svm to a vector for floats
     vector<float> support_vector;
     svm.getSupportVector(support_vector);
     //load this into our detector
     desc.setSVMDetector(support_vector);
-
+    /*
+    small_svm.load("/home/sp/SeniorProject/models/stopsign_small.yaml");
+    small_svm.getSupportVector(support_vector);
+    small_desc.setSVMDetector(support_vector);
+    */
     start_socket();
 }
 
@@ -101,12 +105,23 @@ int DetectorServer::processImage(Mat &img){
     
     //our large image holder
     gpu::GpuMat gimg;
-    //create the vector to hold the results
-    vector<Rect> matches;
     
     //upload our image to the gpu
     gimg.upload(gray_img);
-    desc.detectMultiScale(gimg, matches, 0, Size(), Size(0, 0), 1.04, 5);
+    
+    /*
+    //quick rejector
+    vector<Rect> bad_matches;
+    desc.detectMultiScale(gimg, bad_matches, 0, Size(), Size(0, 0), 2.0, 5);
+    if(bad_matches.size() == 0){
+	return 0;
+    }
+    */
+    
+    //create the vector to hold the results
+    vector<Rect> matches;
+
+    desc.detectMultiScale(gimg, matches, 0, Size(), Size(0, 0), 1.10, 5);
     for(int i=0; i < matches.size(); ++i){
 	rectangle(gray_img, matches[i], Scalar(255, 0, 0));		
     }    

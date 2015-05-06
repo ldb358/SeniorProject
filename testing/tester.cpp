@@ -28,7 +28,7 @@ int main(int argc, char**argv){
     int total_n = 0;
     double total_exec_time = 0.0;
     int cur = 0;
-    myfile << "Run Time" << "," << "Correctness" << endl;
+    myfile << "Run Time" << "," << "Got" << "," << "Should be" << endl;
     while(dataset->has_next()){
         dataset->next(img_data);
         cur++;
@@ -36,7 +36,7 @@ int main(int argc, char**argv){
         double delta_t;
         //start clock
         clock_gettime(CLOCK_MONOTONIC, &start); 
-        int status = 0;
+        unsigned int status = 0;
         //fork and get status
         int pid = fork();
         if(pid == 0){
@@ -84,7 +84,7 @@ int main(int argc, char**argv){
         }
         cout << "Testing with image " << cur << " Expected:" << (ispos? "pos" : "neg")
             << " Got:" << (status? "pos" : "neg") << endl;
-        myfile << delta_t << "," << ((status==ispos)? "correct" : "incorrect") << endl;
+        myfile << delta_t << "," << status  << "," << ispos << endl;
     }
     myfile << "Number of Samples" << "," << "Total run time(seconds)" << "," 
         << "average time per image(seconds)" << "," 
@@ -100,8 +100,8 @@ int main(int argc, char**argv){
         << pos_matches << "," << (((float)pos_matches)/cur)*100 << ","
         << tp  << "," << (((float)tp)/total_p)*100  << ","
         << tn << "," << (((float)tn)/total_n)*100 << ","
-        << fp << "," << (((float)fp)/total_p)*100 << "," 
-        << fn << "," << (((float)fn)/total_n)*100 << ","
+        << fp << "," << (((float)fp)/total_n)*100 << "," 
+        << fn << "," << (((float)fn)/total_p)*100 << ","
 	<< (((float)tp)/(tp+fn)) << ","
 	<< (((float)tp)/(fp+tp)) << ","
 	<< endl; 

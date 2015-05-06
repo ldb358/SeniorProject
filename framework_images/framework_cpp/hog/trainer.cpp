@@ -44,7 +44,7 @@ float hn_train(DsReader &dataset, LinearSVM *svm, vector< vector<float> > &train
 		Rect tag(img_data.tags[n].pos.x, img_data.tags[n].pos.y, 
 			    width, height);	
 		Rect overlap = matches[i] & tag;
-		if(overlap.area()/tag.area() > .5){
+		if(((float)overlap.area())/tag.area() > .5){
 		    ispos = 1;
 		}
 	    }
@@ -53,7 +53,9 @@ float hn_train(DsReader &dataset, LinearSVM *svm, vector< vector<float> > &train
 		vector<float> ders;
 		matches[i].width = min(img.cols-matches[i].x, matches[i].width);
 		matches[i].height = min(img.rows-matches[i].y, matches[i].height);
-		gdesc.compute(img(matches[i]), ders);	
+		Mat submat;
+		resize(img(matches[i]), submat, Size(64,128));
+		gdesc.compute(submat, ders);	
 		training_data.push_back(ders);
 		labels.push_back(-1.0);
 	    }else{
@@ -172,72 +174,9 @@ int main(int argc, char**argv){
     int cur =0;
     int positive_count = 0;
     int negative_count = 0;
-    SampleDetector detect(svm, dataset.tag_width(), dataset.tag_height());
-    //set up our detection threads
-    pthread_t threads[NUM_THREADS];
-    pthread_attr_t attr;
-    pthread_attr_init(&attr);
-    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
-    for(int i=0; i < NUM_THREADS; ++i){
-	int rc = pthread_create(&threads[i], &attr, SampleDetector::start_thread, (void*)&detect);
-	if(rc){
-	    cout << "Pthread failed to create threads with error code:" << rc << endl;
-	    return 0;
-	}
-    }
-    pthread_attr_destroy(&attr);
-    /*
-    while(dataset.has_next()){
-	cur++;
-	dataset.next(img_data);
-	Mat img = imread(img_data.path, 0);
-	detect.set_img(img);
-	for(int i=0, max_rows=img.rows-dataset.tag_height(); i < max_rows; i+=step_size){
-	    detect.scan_row_threaded(desc, i, step_size);
-	}
-	while(detect.tworking()){}
-	vector<struct SdMatch> matches = detect.get_matches();
-	
-	int tag_area = dataset.tag_width()*dataset.tag_height();    
-	int pos_img = 0;
-	for(int i=0; i < matches.size(); ++i){ 
-	    int ispos = false;
-	    for(int n=0; n < img_data.tags.size(); ++n){
-		string cls = dataset.get_class(img_data.tags[n].clss);
-		//first check if this tag is even the right type of object
-		if(cls != type || cls == "na"){
-		    break;
-		}
-		//get the overlap of the found object and the tag
-		int overlap = get_overlap(matches[i].x, matches[i].y,
-					  img_data.tags[n].pos.x, img_data.tags[n].pos.y, 
-					  dataset.tag_width(), dataset.tag_height(),
-					  img_data.tags[n].scale);
-		
-		float ratio = ((float)overlap)/tag_area; 
-		if(ratio > overlap_thresh){
-		    ispos = true;
-		    //perform non-max supression and add as positive samples
-		    pos_img = 1;
-		}
-	    }
-	    if(ispos){
-		positive_count++;  
-	    }else{
-		negative_count++;
-		training_data.push_back(matches[i].desc);
-		labels.push_back(-1.0);
-	    }
-	}
-	img.release();	
-	detect.clear();
-	//divides the dataset into two parts, training and testing
-	if(cur > 70) break;
-	cout << "image " << cur << "/" << dataset.size() << " Status:" << pos_img <<  endl;
-    }*/
-    for(int i=0; i < 5; ++i){
+    for(int i=0; i < 2; ++i){
 	cout << "Running iteration:" << i << endl;
-	float ratio  = hn_train(dataset, svm, training_data, labels, type, scale, rects);
+	float ratio  = hn_train(dataset, svm, training_data, labels, type, scale, i+1);
 	cout << "fp:tp - " << ratio << endl;
 	//retrain the svm with the expanded sample set
 	//convert training vector to a mat
@@ -276,11 +215,14 @@ int main(int argc, char**argv){
 	dataset.next(img_data);
 	//load the image
 	Mat cimg = imread(img_data.path, 1);	
+
+	//if the image is empty(it doesnt exist) skip it
+	if(cimg.cols == 0) 
+		continue;
+
 	Mat img;
 	cvtColor(cimg, img, CV_BGR2GRAY);
-	//if the image is empty(it doesnt exist) skip it
-	if(img.cols == 0) 
-		continue;
+	
 	//upload the image to the gpu for detection
 	gpu::GpuMat gimg;
 	gimg.upload(img);
@@ -332,11 +274,5 @@ int main(int argc, char**argv){
     //save the svm to output file
     svm->save(argv[3]);
     cout << argv[3] << " written " << endl;
-    while(detect.cur_threads() > 0){
-	detect.kill_thread();
-    }
-    for(int i=0; i < NUM_THREADS; ++i){
-	pthread_join(threads[i], (void**)NULL);
-    } 
     exit(0);
 }
