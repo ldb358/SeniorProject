@@ -27,6 +27,9 @@ hog_server: hog/detector_client.o
 	g++ -g -c -o framework.o framework.cpp
 	g++ -g framework.o hog/detector_client.o $(detect_includes) -Wall -o framework $(opencv) $(cuda)
 
+hog_demo_realtime: hog/detector_client.o
+	g++ -g -c -o demo_realtime.o demo_realtime.cpp
+	g++ -g demo_realtime.o hog/detector_client.o $(detect_includes) -Wall -o demo_realtime $(opencv) $(cuda)
 
 test: hog_server
 	-./framework pos_sample.jpg 
@@ -38,12 +41,15 @@ framework: alg.o algorithm.h framework.cpp
 alg.o:	alg.cpp algorithm.h
 	g++ `pkg-config --cflags opencv` -g -c alg.cpp  
 
-alg_combine.o:	alg_combine.cpp 
-	g++ -g -std=c++11 -c -o alg_combine.o alg_combine.cpp
+alg_combine.o:	alg_combine/alg_combine.cpp 
+	g++ -g -std=c++11 -c -o alg_combine/alg_combine.o alg_combine/alg_combine.cpp
 
 alg_combine: alg_combine.o framework.o
 	g++ -g -c -o framework.o framework.cpp
-	g++ -g framework.o alg_combine.o -Wall -o framework $(opencv) $(cuda)
+	g++ -g framework.o alg_combine/alg_combine.o -Wall -o framework $(opencv) $(cuda)
+
+demo_realtime: alg.o demo_realtime.cpp
+	g++ -g alg.o demo_realtime.cpp -Wall -o demo_realtime $(opencv) $(cuda)
 
 clean:
 	rm -f framework framework_exec dummyalg alg.o

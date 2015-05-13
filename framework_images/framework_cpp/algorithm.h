@@ -1,6 +1,7 @@
 // interface to framework 
 
 #include <opencv2/highgui/highgui.hpp>
+#include <vector>
 
 using namespace cv;
 

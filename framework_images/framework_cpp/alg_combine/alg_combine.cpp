@@ -21,7 +21,7 @@ int shapeDetect(Mat img);
 Mat colorDetect(Mat imgHSV, Scalar low, Scalar high);
 Scalar getFrac(Mat imgThresholded);
 
-int processImage(Mat Img) {
+int processImage(Mat &Img) {
 	Size size(WIDTH,HEIGHT);
 	resize(Img, Img, size);
 	Mat imgHSV;
