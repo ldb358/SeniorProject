@@ -31,6 +31,15 @@ hog_demo_realtime: hog/detector_client.o
 	g++ -g -c -o demo_realtime.o demo_realtime.cpp
 	g++ -g demo_realtime.o hog/detector_client.o $(detect_includes) -Wall -o demo_realtime $(opencv) $(cuda)
 
+hog_demo_preproc: hog/detector_client.o
+	g++ -g -c -o demo_preproc.o demo_preproc.cpp
+	g++ -g demo_preproc.o hog/detector_client.o $(detect_includes) -Wall -o demo_preproc $(opencv) $(cuda)
+
+hog_demo_run: hog_demo_realtime hog_demo_preproc 
+	./demo_realtime test_videos/short.mpg demo_videos/hog_demo_realtime.mpg 
+	./demo_preproc test_videos/short.mpg demo_videos/hog_demo_preproc.mpg 
+
+
 test: hog_server
 	-./framework pos_sample.jpg 
 	-./framework neg_sample.jpg
