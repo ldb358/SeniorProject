@@ -8,7 +8,7 @@ default: alg.o framework
 bow/detect.o: bow/detect.cpp
 	g++ -g -std=c++11 -c -o bow/detect.o bow/detect.cpp
 
-hog/detector_client.o: hog/detector.cpp
+hog/detector_client.o: hog/detector_client.cpp
 	g++ -g -std=c++11 -c -o hog/detector_client.o hog/detector_client.cpp
 
 
@@ -27,6 +27,7 @@ hog_server: hog/detector_client.o
 	g++ -g -c -o framework.o framework.cpp
 	g++ -g framework.o hog/detector_client.o $(detect_includes) -Wall -o framework $(opencv) $(cuda)
 
+
 hog_demo_realtime: hog/detector_client.o
 	g++ -g -c -o demo_realtime.o demo_realtime.cpp
 	g++ -g demo_realtime.o hog/detector_client.o $(detect_includes) -Wall -o demo_realtime $(opencv) $(cuda)
@@ -36,9 +37,41 @@ hog_demo_preproc: hog/detector_client.o
 	g++ -g demo_preproc.o hog/detector_client.o $(detect_includes) -Wall -o demo_preproc $(opencv) $(cuda)
 
 hog_demo_run: hog_demo_realtime hog_demo_preproc 
-	./demo_realtime test_videos/short.mpg demo_videos/hog_demo_realtime.mpg 
-	./demo_preproc test_videos/short.mpg demo_videos/hog_demo_preproc.mpg 
+	#./demo_realtime test_videos/Stop1.mp4 demo_videos/hog_demo_realtime.mpg 
+	#./demo_realtime test_videos/Stop2.mp4 demo_videos/hog_demo_realtime2.mpg 
+	./demo_preproc test_videos/Stop1.mp4 demo_videos/hog_demo_preproc.mpg 
+	./demo_preproc test_videos/Stop2.mp4 demo_videos/hog_demo_preproc2.mpg 
 
+alg_combine_demo_realtime: alg_combine/alg_combine.o
+	g++ -g -c -o demo_realtime.o demo_realtime.cpp
+	g++ -g demo_realtime.o alg_combine/alg_combine.o $(detect_includes) -Wall -o demo_realtime_combine $(opencv) $(cuda)
+
+alg_combine_demo_preproc: alg_combine/alg_combine.o
+	g++ -g -c -o demo_preproc.o demo_preproc.cpp
+	g++ -g demo_preproc.o alg_combine/alg_combine.o $(detect_includes) -Wall -o demo_preproc_combine $(opencv) $(cuda)
+
+alg_combine_demo_run: alg_combine_demo_realtime alg_combine_demo_preproc 
+	./demo_realtime_combine test_videos/Stop1.mp4 demo_videos/alg_combine_demo_realtime.mpg 
+	./demo_realtime_combine test_videos/Stop2.mp4 demo_videos/alg_combine_demo_realtime2.mpg 
+	./demo_preproc_combine test_videos/Stop2.mp4 demo_videos/alg_combine_demo_preproc.mpg 
+	./demo_preproc_combine test_videos/Stop2.mp4 demo_videos/alg_combine_demo_preproc2.mpg 
+
+roi/alg2.o: roi/alg2.cpp
+	g++ -g -c -o roi/alg2.o roi/alg2.cpp
+
+roi_demo_realtime: roi/alg2.o
+	g++ -g -c -o demo_realtime.o demo_realtime.cpp
+	g++ -g demo_realtime.o roi/alg2.o -Wall -o demo_realtime_roi $(opencv) $(cuda)
+
+roi_demo_preproc: roi/alg2.o
+	g++ -g -c -o demo_preproc.o demo_preproc.cpp
+	g++ -g demo_preproc.o roi/alg2.o -Wall -o demo_preproc_roi $(opencv) $(cuda)
+
+roi_demo_run: roi_demo_realtime roi_demo_preproc 
+	./demo_realtime_roi test_videos/Stop1.mp4 demo_videos/roi_demo_realtime.mpg 
+	./demo_realtime_roi test_videos/Stop2.mp4 demo_videos/roi_demo_realtime2.mpg 
+	./demo_preproc_roi test_videos/Stop1.mp4 demo_videos/roi_demo_preproc.mpg 
+	./demo_preproc_roi test_videos/Stop2.mp4 demo_videos/roi_demo_preproc2.mpg 
 
 test: hog_server
 	-./framework pos_sample.jpg 
