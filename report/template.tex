@@ -23,6 +23,9 @@
 \usepackage{hyperref}
 \usepackage{geometry}
 
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{0.8em}
+
 \def\name{Lane Breneman,Joshua Deare, Hari Caushik}
 \title{Stopify - Real time road sign detection}
 \date{June 1st, 2015}
@@ -32,12 +35,32 @@
 \maketitle
 
 \section*{Introduction}
+Our clients, ON Semiconductor requested that we research and implement computer
+vision algorithms to be able to detect street signs from video or still images
+intended to be captured from a low cost camera inside an automobile. The 
+algorithms were required to run on low cost development boards like the 
+Beaglebone Black and the NVIDIA Jetson TK1. ON Semiconductor recently acquired
+Aptina, the leading producer of CMOS image sensors and hope to enter into the
+Automotive Safety industry sometime in the future. They intended this to be a 
+research project in which we can research, develop and test a variety of stop 
+sign detection algorithms and analyze them to determine which algorithms seem
+most promising, which development boards are most promising and provide a base 
+for future senior design projects to contribute to.
 
+Our clients at ON Semiconductor were Matthew Zochert, Carl Price and Don Reid.
+The members of our team were Joshua Deare, Lane Breneman and Hari Caushik. 
+Throughout the year, we each contributed to the creation of the algorithm 
+development framework, testing framework, capturing of images and video for 
+the test dataset and presenting our work. Our clients tracked our progress,
+provided suggestions for our algorithms, use of hardware, and the presentation
+of our work and even provided us with starter code early on to ramp up on 
+programming with the OpenCV C++ library. 
 \subsection*{The Client}
 %Who requested it?
 %Why was it requested?
 %What is its importance?
 %Who was your client? 
+
 \subsection*{The Team}
 %Who are the members of your team?
 %What were their roles?
