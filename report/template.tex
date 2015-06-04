@@ -23,6 +23,23 @@
 \usepackage{hyperref}
 \usepackage{geometry}
 
+\usepackage{listings}
+\lstset{
+  language=C++,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
 \setlength{\parindent}{0cm}
 \setlength{\parskip}{0.8em}
 
@@ -89,6 +106,41 @@ invokes the development framework and the algorithm linked to it on each image
 in the test dataset.
 
 \subsubsection*{Development Framework}
+\paragraph*{Usage}
+The development framework, written in
+framework\_images/framework\_cpp/framework.cpp from the root project directory,
+is a C++ program that takes a command line argument, the path of the image to
+process, and returns a 1 if the algorithm determined that the image contained a
+stop sign or a 0 if not. An optional third argument can be provided to display
+the image being classified. For example, to classify 
+framework\_images/framework\_cpp/pos\_sample.jpg, an image containing a stop
+sign, the proper usage is
+\begin{lstlisting}
+./framework pos_sample.jpg
+\end{lstlisting}
+to simply return the classification result without displaying it. To display
+the image, this would be
+\begin{lstlisting}
+./framework pos_sample.jpg 1
+\end{lstlisting}
+although the actual value of the third argument does not matter, just its 
+presence.
+\paragraph*{Implementation Details}
+The development framework includes the
+framework\_images/framework\_cpp/algorithm.h header file that provides the 
+interface the algorithms must be written to. This is the processImage function,
+with the signature
+\begin{lstlisting}
+int processImage(Mat &img);
+\end{lstlisting}
+The framework loads the test image from the path specified in the command line 
+argument onto memory with the OpenCV imread funtion as follows:
+\begin{lstlisting}
+Mat img = imread(argv[1], CV_LOAD_IMAGE_COLOR);
+\end{lstlisting}
+The second argument specifies the loaded image to be a 3 channel color image
+and the output is stored in an OpenCV Mat object, a wrapper around a 
+multi-channel 2-dimensional image array.
 
 \subsubsection*{Algorithms}
 
