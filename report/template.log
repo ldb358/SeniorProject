@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=latex 2015.6.2)  5 JUN 2015 02:08
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=latex 2015.6.2)  5 JUN 2015 10:35
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -552,25 +552,31 @@ File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 163.
- [2] [3] [4]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 317.
- [5]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 317.
+ [2]
+Overfull \hbox (98.92888pt too wide) in paragraph at lines 229--231
+[]\OT1/cmr/m/n/10 To use this al-go-rithm we first need to train it. To do this
+ we will nav-i-gate to the $\OML/cmm/m/it/10 =framework[]images=framework[]cpp=
+bow=$
+ []
 
-(./template.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 317.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 317.
+[3] [4] [5]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 363.
+ [6]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 363.
+ (./template.aux)
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 363.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 363.
 Package rerunfilecheck Info: File `template.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 317.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 363.
  ) 
 Here is how much of TeX's memory you used:
- 10782 strings out of 495029
- 157381 string characters out of 6181524
- 318176 words of memory out of 5000000
- 13854 multiletter control sequences out of 15000+600000
+ 10794 strings out of 495029
+ 157487 string characters out of 6181524
+ 319176 words of memory out of 5000000
+ 13866 multiletter control sequences out of 15000+600000
  11969 words of font info for 47 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  47i,6n,97p,543b,1041s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on template.dvi (6 pages, 27484 bytes).
+Output written on template.dvi (7 pages, 33416 bytes).

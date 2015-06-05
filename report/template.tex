@@ -196,6 +196,52 @@ The make test isn't necessary but it will test that the server is running proper
 Now you can use it like any other algorithm in the framework.
 
 \subsubsection*{SURF and Bag of Words}
+SURF and Bag of Words(BOW) are actually two algorithms that are used in conjunction to
+classify an image. Classification is different than recognition in that it can't tell 
+you where the stop sign is in the image, just that one exists. The algorithm works
+in three stages:
+\begin{enumerate}
+    \item SURF is run over a tagged dataset, where it extracts the surf descriptors
+        from any tags inside the image. These descriptors are added to a list.
+    \item The list of all the descriptors is passed to a K-Means clustering algorithm
+        that will find any groups of clustered points. These groups are then used to
+        train a BOW vocabulary.
+    \item We then run SURF over the full sized images in another test dataset. These
+        SURF descriptors are then passed to BOW vocabulary which creates a new vector.
+    \item This vector is then used to train a SVM. It is labeled positive if there is
+        a tagged stop sign in the image, otherwise it is label a negative example. The
+        SVM is then trained/
+    \item To actually classify an image you just run 3 and 4 over an image but instead
+        of training SVM you predict with it. If it predicts true there is a stop sign,
+        otherwise there isn't.
+\end{enumerate}
+
+This algorithm ended up have some issues that should be kept in mind before using:
+\begin{enumerate}
+    \item It is slow, taking 1.5 seconds per a 400x300 image.
+    \item It is only kind of accurate, the best was 72% accuracy.
+    \item It is proprietary, meaning that you can't use it in any final commercial project.
+        Additionally NVidia doesn't include it in the optimized OpenCV library
+        which means that you will have to give up the OpenCV optimizations
+        to use this algorithm on the jetson.
+\end{enumerate}
+
+To use this algorithm we first need to train it. To do this we will navigate to the
+$/framework\_images/framework\_cpp/bow/$ in the git path. Once there we can run:
+\begin{lstlisting}
+make trainer
+./trainer [taged dataset .json] [name of file to save the model to] [name of file to save vocab to]
+\end{lstlisting}
+
+You will notice that this outputs two files, the first is the SVM model, the second 
+contains the vocabulary object. Both of these files should be copied to to models 
+folder. Next edit detect.h and set the MODEL and VOCAB constants to be the absolute
+path to the files that were just created. To run the detector you need to naviagte 
+down to the $framework\_cpp$ directory. Build and run it using:
+\begin{lstlisting}
+make bow
+make test
+\end{lstlisting}
 
 \subsubsection*{ROI}
 
