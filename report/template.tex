@@ -80,11 +80,11 @@ provided suggestions for our algorithms, use of hardware, and the presentation
 of our work and even provided us with starter code early on to ramp up on 
 programming with the OpenCV C++ library. 
 
-\subsection*{Main Project Changes}
+\section*{Main Project Changes}
 
-\subsection*{Weekly Blog Posts}
+\section*{Weekly Blog Posts}
 
-\subsection*{Project Documentation}
+\section*{Project Documentation}
 % How does your project work?
 % - What is its structure?
 % - What is its Theory of Operation?
@@ -105,7 +105,7 @@ each of our algorithms based on a number of evaluation metrics. It essentially
 invokes the development framework and the algorithm linked to it on each image
 in the test dataset.
 
-\subsubsection*{Development Framework}
+\subsection*{Development Framework}
 \paragraph*{Usage}
 The development framework, written in
 framework\_images/framework\_cpp/framework.cpp from the root project directory,
@@ -142,26 +142,92 @@ The second argument specifies the loaded image to be a 3 channel color image
 and the output is stored in an OpenCV Mat object, a wrapper around a 
 multi-channel 2-dimensional image array.
 
-\subsubsection*{Algorithms}
+\subsection*{Algorithms}
 
-\subsubsection*{Testing Framework}
+\subsubsection*{HOG}
+The HOG algorithm works by extracting a HOG Descriptor from a 64x128 image window
+this descriptor is then run through a SVM to see whether the window contains a 
+stop sign. If it does the match is added to a vector of bounding rectangles which
+represent the matches. The window is then shifted over a little bit and then rerun.
+This repeats until the entire image has been processed. The matches are then run 
+through non-maximum suppression to eliminate overlapping matches.
 
-\subsubsection*{Test Dataset}
+To run detector code you train a model to do this navigate to the hog directory. In
+the git projects this is in $/framework\_images/framework\_cpp/hog/$. From there you can
+run the command(assuming you have a tagged dataset):
+\begin{lstlisting}
+./trainer [path to dataset json] [path to output model] -c 200 -e 1e-6 -i 450 -o .5 -s 1.10 -r 5
+\end{lstlisting}
+The arguments:
+\begin{itemize}
+    \item c - C value for the SVM (See CVSVM documentation)
+    \item e - Epsilon value for the SVM (See CVSVM documentation)
+    \item i - Max number of iterations while training
+    \item o - Amount of overlap required to be considered a true positive
+    \item s - How much the image pyramid scales when trying to match (See gpu::HOG documentation)
+    \item r - How many overlapping rectangles are required during suppression to be considered a match
+\end{itemize}
 
-\subsection*{Resources}
+This will take a while but once its done it will output some basic statistics 
+on how the new training set performed. To use this trained model we have to copy it
+to the models folder in the root git directory. With that done edit the name of the
+module files used in $detector\_server.cpp$ on line 10 like so:
+\begin{lstlisting}
+svm.load(<absolute path model file>); 
+\end{lstlisting}
+
+
+The path must be absolute since we don't know what directory $0detector\_server$ will
+be run in and we want to be sure it finds the model.
+
+With that done we can now run it, to do that you will need two terminal sessions.
+In the first run:
+\begin{lstlisting}
+make detector_server
+./detector_server 
+\end{lstlisting}
+
+In the second navigate to to the $framework\_images/framework\_cpp$ directory and run:
+\begin{lstlisting}
+make hog_server
+make test
+\end{lstlisting}
+The make test isn't necessary but it will test that the server is running properly.
+Now you can use it like any other algorithm in the framework.
+
+\subsubsection*{SURF and Bag of Words}
+
+\subsubsection*{ROI}
+
+\subsection*{Testing Framework}
+
+The testing framework is pretty straight forward and requires two prerequisites:
+\begin{enumerate}
+    \item The main framework is already compiled with the algorithm you want to run
+    \item You have a tagged dataset with the corresponding .json file 
+\end{enumerate}
+With that done to run the testing framework use:
+\begin{lstlisting}
+./tester [json file] [path to the result .csv you want create] [path to the framework executable]
+\end{lstlisting}
+This will create a .csv file with the result statistics for the algorithm.
+
+\subsection*{Test Dataset}
+
+\section*{Resources}
 % What web sites were helpful (Listed in order of helpfulness)
 % What, if any, reference books really helped?
 % Were there any people on campus that were really helpful?
 The following resources were particularly helpful:
 
-\subsection*{What We Learned}
+\section*{What We Learned}
 % What technical information did you learn?
 % What non-technical information did you learn?
 % What have you learned about project work?
 % What have you learned about project management?
 % What have you learned about working in teams?
 % If you could do it all over, what would you do differently?
-\subsubsection*{Hari Caushik}
+\subsection*{Hari Caushik}
 By contributing to this project, I learned a fair bit of technical information. 
 I improved my C++ programming skills and gained a familiarity with the OpenCV
 library. In addition, I learned about the major concepts in computer vision
@@ -194,7 +260,7 @@ smoothly. It is much easier to perform when each of us knows what is expected
 of us and have clearly defined responsibilities. When this breaks down, there 
 tends to be a lot of confusion and consequently inaction. 
 
-\subsubsection*{Lane Breneman}
+\subsection*{Lane Breneman}
 
 %What technical information did you learn?
 Before this project I had used OpenCV for object recognition. That said I had
@@ -242,10 +308,10 @@ If I could make one change I would have done 1 advanced algorithm each that we w
 By advanced I mean more complicated than even the HOG or SURF algorithms. I feel
 the project would of had more to show and been more rewarding if we had.
 
-\subsubsection*{Joshua Deare}
+\subsection*{Joshua Deare}
 
-\subsection*{Appendix 1: Essential Code Listings}
+\section*{Appendix 1: Essential Code Listings}
 
-\subsection*{Appendix 2: Other Material}
+\section*{Appendix 2: Other Material}
 
 \end{document}
