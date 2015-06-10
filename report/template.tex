@@ -8,6 +8,7 @@
 \usepackage{alltt}
 \usepackage{float}
 \usepackage{color}
+\usepackage{upquote}
 \usepackage{url}
 
 \usepackage{pstricks, pst-node}
@@ -26,6 +27,7 @@
 \usepackage{listings}
 \lstset{
   language=C++,
+  upquote=true,
   aboveskip=3mm,
   belowskip=3mm,
   showstringspaces=false,
@@ -146,12 +148,93 @@ After loading the image, the image is processed and output is displayed. If
 the render option is specified, 
 
 \begin{lstlisting}
-imshow("opencvtest", img);
+imshow(opencvtest, img);
 \end{lstlisting}
 
 displays the image being processed.
 \subsection*{Algorithms}
 
+\subsubsection*{Contour and Color Detection}
+\paragraph{Description and Usage}
+Contour and color detection detects stop signs by finding the contours in the
+image and searching the list of contours for the characteristic octagonal 
+shape of the stop sign. A contour is a curve representing the boundary of a
+region in the same color. Each contour is represented by an array of points.
+
+If the octagonal contours were found, the algorithm returns immediately as 
+there is a very high probability that the image contains a stop sign. If 
+however, an octagonal contour was not found, the image is then processed for 
+color detection to determine the percentage of red pixels. If the percentage is
+higher than a specified threshold value, the image is classified as a stop 
+sign.
+
+This algorithm is linked to the framework and run by
+
+\begin{lstlisting}
+make alg_combine
+./framework [path to image file]
+\end{lstlisting}
+
+\paragraph{Implementation Details}
+The implementation of Contour and Color Detection is provided in the file 
+framework\_images/framework\_cpp/alg\_combine/alg\_combine.cpp from the root 
+directory of our project. The RGB image is first converted to grayscale to make
+edge detection simpler by removing the extra channels with 
+
+\begin{lstlisting}
+cvtColor(Img, Img_gray, CV_BGR2GRAY);
+\end{lstlisting}
+
+The Mat object Img\_gray now contains the grayscale image. A Gaussian Blur is
+then applied to this grayscale image to smooth it and remove noise. 
+
+\begin{lstlisting}
+GaussianBlur(Img_gray, Img_gray, Size(3,3), 0);;
+\end{lstlisting}
+
+The resultant image is then passed through the Canny edge detector to detect 
+the edges and threshold the image. 
+
+\begin{lstlisting}
+Canny(Img_gray, canny_output, thresh, thresh*2, 3);
+\end{lstlisting}
+
+These edges are then passed into the shapeDetect function, which searches for 
+the 8-sided contour. The contours are first found by the OpenCV function 
+findContours.
+
+\begin{lstlisting}
+findContours(img, contour, hierarchy, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE, Point(0,0));
+\end{lstlisting}
+
+Then the algorithm loops through each contour found and approximates a 
+polygonal curve from each.
+
+\begin{lstlisting}
+approxPolyDP(contour[i], result[i], epsilon, true);
+\end{lstlisting}
+
+If the curve is 8-sided and the area enclosed is greater than a specified
+amount, the image is classified as stop sign. Otherwise, if no 8-sided contours
+of the minimum area were found, the algorithm passes the original image through
+color detection. This is done by first converting the original Mat object to
+the HSV, or hue-saturation-value color space. This allows to focus simply on 
+the hue component, or the color component and ignore differences in brightness,
+accounted for by the saturation and value components. This is done by
+
+\begin{lstlisting}
+cvtColor(Img, imgHSV, COLOR_BGR2HSV);
+\end{lstlisting}
+
+The HSV image is then thresholded based on a specified hue threshold.
+
+\begin{lstlisting}
+Mat imgThresholded = colorDetect(imgHSV, Scalar(iLowH, iLowS, iLowV), Scalar(iHighH, iHighS, iHighV));
+\end{lstlisting}
+
+Finally, the percentage of red is found with the getFrac function and this is
+compared with a minimum percentage of red and the image is classified as a 
+stop sign or not stop sign. 
 \subsubsection*{HOG}
 The HOG algorithm works by extracting a HOG Descriptor from a 64x128 image window
 this descriptor is then run through a SVM to see whether the window contains a 
@@ -313,6 +396,19 @@ communication among all team members is essential to moving the project along
 smoothly. It is much easier to perform when each of us knows what is expected
 of us and have clearly defined responsibilities. When this breaks down, there 
 tends to be a lot of confusion and consequently inaction. 
+
+I thoroughly enjoyed working with my team members and I feel as if things 
+moved along very smoothly throughout the year. I learned how my teammates work
+throughout the year and which ways I would need to adapt to make it work and
+in which ways I could keep the same work habits. Overall I am very proud and 
+impressed by my teammates' work and abilities and learned a lot technically
+from them as well. Everyone compromised and contributed to the project. 
+
+If I could do this project again, I would take a few more risks and attempt to
+implement algorithms that were a little more advanced and would predict stop 
+signs much more accurately. I wanted to ensure that we had moved the project 
+forward this year. In hindsight, I think I was too conservative and wished I 
+had been a little bolder.
 
 \subsection*{Lane Breneman}
 
