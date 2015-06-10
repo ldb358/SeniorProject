@@ -120,7 +120,198 @@ changes are below:
 \end{center}
 
 \section*{Weekly Blog Posts}
+    \paragraph*{10/31/14}
+    Welcome to our first blog post for our senior capstone project. This week
+    we continued our planning by evaluating the tools that we will use in order
+    to complete our project. By doing this we now have a better idea of how all
+    of the pieces will fit together into a final project. It also helped us to
+    formalize our decision making process forcing us to look at other choices
+    than just our gut feeling.
 
+    Moving forward we will need to meet with our client and update them about 
+    our software decisions and get feedback. Additionally we will be able to 
+    pick up the Beaglebone Black from them meaning we can start working on the
+    project!
+    \paragraph*{11/7/14}
+    This week, we met with our clients at Aptina and discussed and obtained 
+    feedback about our technical review. In addition, we received a Beaglebone
+    Black with an Aptina image sensor from them. We will begin development with
+    this platform. We also clarified logistics and have set up a biweekly 
+    meeting schedule. We have made arrangements to obtain a signature for our 
+    requirements document. 
+    \paragraph*{11/14/14}
+    This week we set up our Beaglebone Black as well as our NVIDIA Shield so 
+    that they are available for ssh access. This means any of us will be able 
+    to work on the required hardware without us having to worry about passing
+    them back and forth. 
+
+    Additionally we took steps towards setting up our github and getting all of
+    us added. 
+
+    In the next week we will be working on getting the requirements document
+    done and approved by our client.
+    \paragraph*{11/21/14}
+    We have completed our requirements document and now need to get it approved
+    by our clients and obtain a signature from them. We plan to meet up next 
+    week to do so. We are also making arrangements to obtain NVIDIA Jetson TK1 
+    boards and are hoping we will get these by Winter Break so that we may be
+    able to start developing on them then. 
+    \paragraph*{11/28/14}
+    We got our requirements document signed and approved by our clients and 
+    have submitted those. We have started to think about what we would like our
+    poster to look like as far as the visuals and presentation of our results.
+    Also in our requirements document, we have decided on precision, recall and
+    accuracy for the algorithm evaluation criteria. We are thinking about other
+    such metrics.
+    \paragraph*{12/5/14}
+    This week we obtained an NVIDIA Jetson development board and met with our 
+    client to discuss our plans for the Winter Break as well as the different
+    options we have for image processing. We discussed the processing of raw 
+    image file formats such as YUV as opposed to compressed file formats like 
+    JPEG. Our clients also provided us with an online resource on Computer
+    Vision algorithms that we will try to leverage. We created our initial 
+    design for our poster and gave our elevator speech. In addition, we have 
+    updated our project page with relevant documentation and have started 
+    working on our final two documents for this term. 
+    \paragraph*{12/12/14}
+    We completed our preliminary design document and our progress report for
+    this term. Our focus now shifts to developing our detection framework, 
+    testing framework, and obtaining images of stop signs and not stop signs 
+    for our test dataset this Winter Break. We also met with Kevin this 
+    morning.
+    \paragraph*{1/9/15}
+    Over the Winter Break we were able to get some of the first parts of our
+    project up and running. For starters we completed our framework for 
+    running the different algorithms. This will allow us to start working on 
+    the image detection algorithms, as well as start implementing the testing
+    framework. We also wrote a tool for manually tagging the signs in images,
+    this is another key component of the testing framework. The last part we 
+    complete over the break was taking a ton of pictures of stop signs so once
+    we have our algorithms written we will have images to test them on. 
+    \paragraph*{1/16/15}
+    This week we have finished our setup work and have started to work on the
+    actual sign detection algorithms. We have also contacted our client and set
+    up a meeting time for this term. We have aligned with each other and 
+    figured out each of our specific responsibilities for completing the 
+    project. For next week, we plan to continue making progress on the design,
+    implementation, and testing of the sign detection algorithms. 
+    \paragraph*{1/23/15}
+    We have tested the detection framework and testing framework with dummy
+    algorithms and both seem to work fine. We have also started to look at 
+    white papers and other sources for our first algorihtms. As a starter, 
+    color detection seems like a good approach and there are some sources 
+    available regarding that.
+    \paragraph*{1/30/15}
+    This week we have continued to look at white papers for our first three 
+    algorithms. There are quite a few sources available regarding street sign
+    detection. We have implemented a real time color detection program with 
+    the aid of the following tutorial:http://opencv-srf.blogspot.com/2010/09/object-detection-using-color-separation.html.
+    We plan to use this with other machine learning algorithms. We are also 
+    going to first try out these algorithms with Matlab to see if they work and
+    if so, write them in OpenCV. We are also planning on having a way of 
+    running each of our algorithms on every image in our testing set. 
+    \paragraph*{2/6/15}
+    This week, we continued implementing the street sign recognition 
+    algorithms. Two of our algorithms use support vector machines and we have 
+    been looking into that. One of our algorithms uses a combination of color
+    detection and shape detection. The color detection is completed except for
+    the inclusion of the support vector machine trained on the percentage of 
+    red pixels in the training set. The shape detection also needs to be 
+    added. 
+    \paragraph*{2/13/15}
+    We had our first checkoff in which we demoed our detection framework, 
+    testing framework, test dataset, white papers, pseudocode and our first 
+    algorithms. The demos went well. We now need to start thinking about our 
+    next algorithms as well as porting the algorithms to the Beaglebone Black
+    and Jetson as this is a non-trivial task.
+    \paragraph*{2/20/15}
+    We have looked at white papers for our second algorithms as well as 
+    machine learning algorithms to apply to color detection. We need to start 
+    implementing those soon for the final checkoff. We have also made slight 
+    changes to our testing framework. 
+    \paragraph*{2/27/15}
+    We have three of our algorithms completed and presented those to our 
+    sponsors this week. We are currently working on each of our second 
+    algorithms. We are also starting to port our algorithms to the Beaglebone
+    Black and Jetson, which must be completed by week 6 next term, as this can
+    take a bit of time to figure out. 
+    \paragraph*{3/6/15}
+    We continued to work on our algorithms for the checkoff during finals week.
+    We are trying to use a support vector machine along with the color 
+    detection algorithm and based on a white paper also trying to combine shape
+    detection with color detection for better accuracy. 
+    \paragraph*{3/13/15}
+    This week was spent further developing our algorithms and finalizing our 
+    plans to complete the milestone by next week. We also ended up changing the
+    algorithm I was working on since it was getting really poor efficiency even
+    on a desktop. So instead of using a part based model, I will be attempting
+    a Bag of words + svm approach that should be more efficient. Additionally
+    we updated our poster with new information, although we found that until 
+    our most recent algorithms are finished there was not a lot we could do.
+    \paragraph*{3/20/15}
+    We completed the last checkoff for this term and it went well. We have 
+    ported one algorithm to the Beaglebone Black and NVIDIA Jetson and have 
+    found that the Beaglebone runs way too slowly. We will need to figure out
+    what we are going to do for the rest of the algorithms and whether to port 
+    them to the Beaglebone or not. 
+    \paragraph*{4/3/15}
+    This week we continued tinkering with our algorithms and have began porting
+    them to the Beaglebone and Jetson. We are also considering changing our
+    requirements in light of some issues with the quality of a few of our 
+    algorithms. We met with our clients and obtained feedback about our last 
+    couple algorithms as well as for the Engineering Expo presentation. We are
+    making plans to capture video of a car ride through Corvallis and attempt 
+    to process it to demo at the Expo.
+    \paragraph*{4/13/15}
+    At the request of our clients, we are in the process of refining our 
+    requirements to focus more on porting the implementation of our algorithms
+    to the Jetson, due to the poor performance on the Beaglebone Black. We 
+    were also requested to port those algorithms which were most promising to 
+    the Jetson. We are in the process of selecting these also. 
+    \paragraph*{4/17/15}
+    We have started to port our algorithms to the Jetson. We are looking into 
+    changing our code slightly for GPU acceleration. We contacted Kevin about
+    our requirements changes and have received notification that they need
+    to be slightly more specific. We are working on finishing that and sending
+    those back into Kevin.
+    \paragraph*{4/24/15}
+    We have sent in our changes to our requirements and they are currently 
+    being reviewed. We have ported some of our algorithms to the Jetson and are
+    getting reasonable performance. We are also finding that the SVM algorithm
+    with color detection is not necessarily getting good accuracy. We may need
+    to stick with basic color detection or color detection coupled with shape
+    detection. 
+    \paragraph*{5/1/15}
+    We are getting our algorithm implementations in presentable form for the 
+    demo next week. We are mostly planning to run our algorithms with the 
+    Jetson although we will not be able to display any graphical output. We 
+    also will need to run our algorithms through the testing framework and 
+    generate statistics to show in the spreadsheet as well as for the 
+    compilation of results for the Engineering Expo.
+    \paragraph*{5/8/15}
+    We have tested our algorithms and evaluated them based on accuracy, 
+    precision and recall. We are continuing to try to improve the runtime of
+    our algorithms and refining them. We are continuing to work on our demo.
+    We will then be in the process of organizing and documenting all of our 
+    work to fulfill the requirements of this class as well as hand over to our
+    clients. 
+    \paragraph*{5/15/15}
+    Just finished the Engineering Expo! It feels great to be done with that 
+    and we are happy with the way it went. We're also exhausted!
+    \paragraph*{5/22/15}
+    We had our final Senior Design lecture/class this week. We have set up our
+    presentation with ON employees for next Thursday. We are starting to put 
+    together our presentation for that. 
+    \paragraph*{5/29/15}
+    We presented our project to ON employees and have started our documentation.
+    We have also received our USB flash drive. We are on track to completing
+    our documentation and wrapping up the project for the year. 
+    \paragraph*{6/5/15}
+    We are in the process of completing our documentation and our clients have
+    reached out to us both to provide feedback and receive feedback on their
+    mentorship. We have provided feedback to them and also have part of our 
+    video done. We will meet our clients one last time next week and wrap up
+    the project.
 \section*{Project Documentation}
 % How does your project work?
 % - What is its structure?
@@ -527,7 +718,60 @@ the project would of had more to show and been more rewarding if we had.
 \subsection*{Joshua Deare}
 
 \section*{Appendix 1: Essential Code Listings}
+\subsection*{Detection Framework}
+\begin{lstlisting}
+/*
+* Framework for testing image processing algorithms with simple C++ interface
+* Last Modified: 1/11/15
+*/
+#include <opencv2/highgui/highgui.hpp>
+#include <iostream>
+#include "algorithm.h"	// interface for image processing algorithms
 
+//#define RENDER		// define if you want to display image
+
+using namespace cv;
+using namespace std;
+
+/*
+int processImage(Mat Img) {
+	int sign = 0;
+
+	// do some processing
+	return sign;
+}*/
+
+int main(int argc, char *argv[]) {
+    if (argc < 2) {
+	cout << "Usage: framework image_file" << endl;
+	exit(EXIT_FAILURE);
+    }
+    int render = 0;
+    int sign = 0;
+#ifndef RENDER
+    if(argc == 3){
+	render = 1;
+    }
+#else
+    render = 1;
+#endif
+    // load image data  
+    Mat img = imread(argv[1], CV_LOAD_IMAGE_COLOR);
+
+    // perform sign recognition
+    sign = processImage(img);
+    
+    // display image/
+    if(render){
+	// show results of sign recognition algorithm
+	sign ? cout << "This is a stop sign.\n" << endl : cout << "This is not a stop sign.\n" << endl;
+	imshow("opencvtest", img);
+	waitKey(0);
+    }
+    return sign;
+}
+
+\end{lstlisting}
 \section*{Appendix 2: Other Material}
 
 \end{document}
