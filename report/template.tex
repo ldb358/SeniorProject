@@ -1,6 +1,5 @@
 \documentclass[letterpaper,10pt,titlepage]{article}
 
-\usepackage{graphicx}
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{amsthm}
@@ -16,7 +15,9 @@
 
 \usepackage{geometry}
 \geometry{textheight=8.5in, textwidth=6in}
-
+\usepackage{graphicx}
+%\usepackage[dvips]{graphics}
+\graphicspath{{img/}}
 %random comment
 
 \newcommand{\cred}[1]{{\color{red}#1}}
@@ -344,11 +345,11 @@ each of our algorithms based on a number of evaluation metrics. It essentially
 invokes the development framework and the algorithm linked to it on each image
 in the test dataset.
 
-%\begin{figure}[H]
-%    \centering
-%    \includegraphics[width=0.8\textwidth,natwidth=610,natheight=642]{img/dataflow.jpg}
-%    \caption{Basic workflow of stop sign detection.}
-%\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{dataflow.pdf}
+    \caption{Basic workflow of stop sign detection.}
+\end{figure}
 
 \subsection*{Development Framework}
 \paragraph*{Usage}
