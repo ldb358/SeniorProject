@@ -134,7 +134,7 @@ with the signature
 int processImage(Mat &img);
 \end{lstlisting}
 The framework loads the test image from the path specified in the command line 
-argument onto memory with the OpenCV imread funtion as follows:
+argument onto memory with the OpenCV imread function as follows:
 \begin{lstlisting}
 Mat img = imread(argv[1], CV_LOAD_IMAGE_COLOR);
 \end{lstlisting}
@@ -142,6 +142,14 @@ The second argument specifies the loaded image to be a 3 channel color image
 and the output is stored in an OpenCV Mat object, a wrapper around a 
 multi-channel 2-dimensional image array.
 
+After loading the image, the image is processed and output is displayed. If
+the render option is specified, 
+
+\begin{lstlisting}
+imshow("opencvtest", img);
+\end{lstlisting}
+
+displays the image being processed.
 \subsection*{Algorithms}
 
 \subsubsection*{HOG}
