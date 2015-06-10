@@ -4,6 +4,7 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{amsthm}
+\usepackage[hang,small]{caption}
 
 \usepackage{alltt}
 \usepackage{float}
@@ -45,13 +46,16 @@
 \setlength{\parindent}{0cm}
 \setlength{\parskip}{0.8em}
 
+\captionsetup[figure]{labelfont=it,font=it}
+\captionsetup[table]{labelfont={it,sc},font={it,sc}}
+
 \def\name{Lane Breneman,Joshua Deare, Hari Caushik}
 \title{Stopify - Real time road sign detection}
 \date{June 1st, 2015}
 \author{Lane Breneman,Joshua Deare, Hari Caushik}
-
 \begin{document}
 \maketitle
+\newpage
 
 \section*{Introduction}
 %Who requested it?
@@ -107,6 +111,12 @@ each of our algorithms based on a number of evaluation metrics. It essentially
 invokes the development framework and the algorithm linked to it on each image
 in the test dataset.
 
+%\begin{figure}[H]
+%    \centering
+%    \includegraphics[width=0.8\textwidth,natwidth=610,natheight=642]{img/dataflow.jpg}
+%    \caption{Basic workflow of stop sign detection.}
+%\end{figure}
+
 \subsection*{Development Framework}
 \paragraph*{Usage}
 The development framework, written in
@@ -155,7 +165,7 @@ displays the image being processed.
 \subsection*{Algorithms}
 
 \subsubsection*{Contour and Color Detection}
-\paragraph{Description and Usage}
+\paragraph*{Description and Usage}
 Contour and color detection detects stop signs by finding the contours in the
 image and searching the list of contours for the characteristic octagonal 
 shape of the stop sign. A contour is a curve representing the boundary of a
@@ -175,7 +185,7 @@ make alg_combine
 ./framework [path to image file]
 \end{lstlisting}
 
-\paragraph{Implementation Details}
+\paragraph*{Implementation Details}
 The implementation of Contour and Color Detection is provided in the file 
 framework\_images/framework\_cpp/alg\_combine/alg\_combine.cpp from the root 
 directory of our project. The RGB image is first converted to grayscale to make
@@ -355,7 +365,32 @@ This will create a .csv file with the result statistics for the algorithm.
 % What web sites were helpful (Listed in order of helpfulness)
 % What, if any, reference books really helped?
 % Were there any people on campus that were really helpful?
-The following resources were particularly helpful:
+The following websites were particularly helpful:
+
+\begin{enumerate}
+    \item http://docs.opencv.org/
+    We made heavy use of the OpenCV C++ documentation. It provided most of the
+    functionality we needed to write our algorithms.
+    \item http://stackoverflow.com/
+    Stack Overflow was a great website to debug problems in our implementation
+    as well as learn more about the internals of some of the OpenCV functions
+    we leveraged.
+    \item http://www.cse.iitd.ernet.in/~pkalra/csl783/canny.pdf
+    This source provided useful information about the implementation of Canny
+    Edge detection.
+    \item http://opencv-srf.blogspot.com/2010/09/object-detection-using-color-seperation.html
+    This is an OpenCV blog that had useful information about color detection
+    and shape detection.
+\end{enumerate}
+
+In addition to these websites, we would like to give a big thank you to our 
+mentors Matthew Zochert, Carl Price and Don Reid for their insights into 
+stop sign recognition algorithms, hardware considerations and so much more. 
+
+Last but not least, we would like to give a big thank you to our Senior Design
+supervisor Professor Kevin McGrath and our TA throughout the year Jon Dodge for
+making this project possible and for their support and insights into our 
+project. 
 
 \section*{What We Learned}
 % What technical information did you learn?
