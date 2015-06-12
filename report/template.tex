@@ -54,12 +54,15 @@
 \def\name{Lane Breneman,Joshua Deare, Hari Caushik}
 \title{Stopify - Real time road sign detection}
 \date{June 1st, 2015}
-\author{Lane Breneman,Joshua Deare, Hari Caushik}
+\author{Lane Breneman, Joshua Deare, Hari Caushik}
 \begin{document}
 \maketitle
 \newpage
+\setcounter{tocdepth}{5}
+\setcounter{secnumdepth}{5}
 \tableofcontents
 \newpage
+\addcontentsline{toc}{section}{Introduction}
 \section*{Introduction}
 %Who requested it?
 %Why was it requested?
@@ -93,6 +96,7 @@ programming with the OpenCV C++ library.
 \vspace*{\fill}
 \begin{center}
 \begin{minipage}{0.6\textwidth}
+\addcontentsline{toc}{section}{Original Requirements Document}
 \section*{Original Requirements Document}
 \end{minipage}
 \end{center}
@@ -100,6 +104,7 @@ programming with the OpenCV C++ library.
 
 \newpage
 
+\addcontentsline{toc}{section}{Main Project Changes}
 \section*{Main Project Changes}
 For the most part, our project stuck to the original specifications. The main
 changes are below:
@@ -139,6 +144,7 @@ changes are below:
     \caption{Final Gantt Chart.}
 \end{figure}
 
+\addcontentsline{toc}{section}{Weekly Blog Posts}
 \section*{Weekly Blog Posts}
     \paragraph*{10/31/14}
     Welcome to our first blog post for our senior capstone project. This week
@@ -332,6 +338,8 @@ changes are below:
     mentorship. We have provided feedback to them and also have part of our 
     video done. We will meet our clients one last time next week and wrap up
     the project.
+
+\addcontentsline{toc}{section}{Project Documentation}
 \section*{Project Documentation}
 % How does your project work?
 % - What is its structure?
@@ -359,6 +367,7 @@ in the test dataset.
     \caption{Basic workflow of stop sign detection.}
 \end{figure}
 
+\addcontentsline{toc}{subsection}{Development Framework}
 \subsection*{Development Framework}
 \paragraph*{Usage}
 The development framework, written in
@@ -404,8 +413,10 @@ imshow(opencvtest, img);
 \end{lstlisting}
 
 displays the image being processed.
+\addcontentsline{toc}{subsection}{Algorithms}
 \subsection*{Algorithms}
 
+\addcontentsline{toc}{subsubsection}{Contour and Color Detection}
 \subsubsection*{Contour and Color Detection}
 \paragraph*{Description and Usage}
 Contour and color detection detects stop signs by finding the contours in the
@@ -487,6 +498,8 @@ Mat imgThresholded = colorDetect(imgHSV, Scalar(iLowH, iLowS, iLowV), Scalar(iHi
 Finally, the percentage of red is found with the getFrac function and this is
 compared with a minimum percentage of red and the image is classified as a 
 stop sign or not stop sign. 
+
+\addcontentsline{toc}{subsubsection}{HOG}
 \subsubsection*{HOG}
 The HOG algorithm works by extracting a HOG Descriptor from a 64x128 image window
 this descriptor is then run through a SVM to see whether the window contains a 
@@ -538,6 +551,7 @@ make test
 The make test isn't necessary but it will test that the server is running properly.
 Now you can use it like any other algorithm in the framework.
 
+\addcontentsline{toc}{subsubsection}{SURF and Bag of Words}
 \subsubsection*{SURF and Bag of Words}
 SURF and Bag of Words(BOW) are actually two algorithms that are used in conjunction to
 classify an image. Classification is different than recognition in that it can't tell 
@@ -586,6 +600,7 @@ make bow
 make test
 \end{lstlisting}
 
+\addcontentsline{toc}{subsubsection}{Region of Interest (ROI)}
 \subsubsection*{Region of Interest (ROI)}
 
 The ROI algorithm is essentially an optimization of color/contour detection. 
@@ -611,6 +626,7 @@ Usage is simple and is of the form
 ./roi_alg [image_name]
 \end{lstlisting}
 
+\addcontentsline{toc}{subsection}{Testing Framework}
 \subsection*{Testing Framework}
 
 The testing framework is pretty straight forward and requires two prerequisites:
@@ -624,8 +640,15 @@ With that done to run the testing framework use:
 \end{lstlisting}
 This will create a .csv file with the result statistics for the algorithm.
 
+\addcontentsline{toc}{subsection}{Test Dataset}
 \subsection*{Test Dataset}
+Our test dataset consisted of the following:
+\begin{itemize}
+    \item 2 videos recorded from a vehicle mounted camera while driving down a street well populated with stop signs
+    \item 172 still images taken from vehicle's perspective, both containing and not containing stop signs.
+\end{itemize}
 
+\addcontentsline{toc}{section}{Resources}
 \section*{Resources}
 % What web sites were helpful (Listed in order of helpfulness)
 % What, if any, reference books really helped?
@@ -657,6 +680,7 @@ supervisor Professor Kevin McGrath and our TA throughout the year Jon Dodge for
 making this project possible and for their support and insights into our 
 project. 
 
+\addcontentsline{toc}{section}{What We Learned}
 \section*{What We Learned}
 % What technical information did you learn?
 % What non-technical information did you learn?
@@ -664,6 +688,7 @@ project.
 % What have you learned about project management?
 % What have you learned about working in teams?
 % If you could do it all over, what would you do differently?
+\addcontentsline{toc}{subsection}{Hari Caushik}
 \subsection*{Hari Caushik}
 By contributing to this project, I learned a fair bit of technical information. 
 I improved my C++ programming skills and gained a familiarity with the OpenCV
@@ -710,6 +735,7 @@ signs much more accurately. I wanted to ensure that we had moved the project
 forward this year. In hindsight, I think I was too conservative and wished I 
 had been a little bolder.
 
+\addcontentsline{toc}{subsection}{Lane Breneman}
 \subsection*{Lane Breneman}
 
 %What technical information did you learn?
@@ -758,6 +784,7 @@ If I could make one change I would have done 1 advanced algorithm each that we w
 By advanced I mean more complicated than even the HOG or SURF algorithms. I feel
 the project would of had more to show and been more rewarding if we had.
 
+\addcontentsline{toc}{subsection}{Joshua Deare}
 \subsection*{Joshua Deare}
 
 %Tech knowledge
@@ -816,6 +843,7 @@ produced a more superior product had that been fixed. Also, because our dataset 
 \vspace*{\fill}
 \begin{center}
 \begin{minipage}{0.6\textwidth}
+\addcontentsline{toc}{section}{Appendix 1: Essential Code Listings}
 \section*{Appendix 1: Essential Code Listings}
 \end{minipage}
 \end{center}
@@ -1093,6 +1121,7 @@ clean:
 \vspace*{\fill}
 \begin{center}
 \begin{minipage}{0.6\textwidth}
+\addcontentsline{toc}{section}{Appendix 2: Other Material}
 \section*{Appendix 2: Other Material}
 \end{minipage}
 \end{center}
