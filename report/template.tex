@@ -1,3 +1,4 @@
+% !TEX TS-program = latex
 \documentclass[letterpaper,10pt,titlepage]{article}
 
 \usepackage{amssymb}
@@ -90,7 +91,7 @@ programming with the OpenCV C++ library.
 
 \vspace*{\fill}
 \begin{center}
-\begin{minipage}{.6\textwidth}
+\begin{minipage}{0.6\textwidth}
 \section*{Original Requirements Document}
 \end{minipage}
 \end{center}
@@ -587,7 +588,27 @@ make test
 \subsubsection*{Region of Interest (ROI)}
 
 The ROI algorithm is essentially an optimization of color/contour detection. 
+But it only performs contour detection on the portion of the original image which
+contains the highest concentration of red pixels. Note that the percent concentration is a static value for this ROI implementation. And must be changed based on image size.
+This is certainly a shortcoming of this algorithm.
+The following is the process which the algorithm works:
+\begin{enumerate}
+    \item Find the region which contains the most red pixels.
+    \item Crop the image just to that region.
+    \item Convert that crop to HSV colorspace.
+    \item Perform contour detection on the HSV image.
+    \item If an 8 sided convex object is detected, then we think there is a stop sign.
+\end{enumerate}
 
+To build the framework with the ROI algorithm:
+\begin{lstlisting}
+make roi_alg
+\end{lstlisting}
+
+Usage is simple and is of the form
+\begin{lstlisting}
+./roi_alg [image_name]
+\end{lstlisting}
 
 \subsection*{Testing Framework}
 
@@ -737,11 +758,63 @@ By advanced I mean more complicated than even the HOG or SURF algorithms. I feel
 the project would of had more to show and been more rewarding if we had.
 
 \subsection*{Joshua Deare}
+
+%Tech knowledge
+When I started this project, the only technical knowledge I had regarding the topic was 
+a very brief introduction to computer vision using the Python OpenCV libraries.
+Even when I had worked with these libraries before, I barely touched the surface. 
+I was slightly intimidated to use C++ on this project, mostly because of the rather 
+negative stigma associated with it in various places I have worked, despite having never used it myself.
+I have to say I was pleasantly surprised when I realized there was not a steep learning curve,
+as I have much experience in C and the object oriented parts of the language are easy enough to acclimate to from experiences in Java and Python.
+In addition to learning a new language, I loved being able to dive into research papers on the topic of computer vision.
+It is a fascinating topic, and one I know I'm not even close to fully understanding. 
+Nonetheless, the ability to learn how a computer detects contours and harsh edges in an image has been most exhilarating.
+
+%Non-Tech knowledge
+From a non-technical perspective, I learned how to internally organize and synthesize knowledge
+from a vast multitude of sources. When you are reading multiple papers and referencing tens
+of websites for a project it is easy to lose track of where your sources are located.
+Surprisingly to me, I found the best way for me to track technical information was
+to use hard-copy documents with a color-coded highlighter and sticky note system
+for organization. I learned having something tactile helps me organize my thoughts.
+
+%Project Work
+What I learned about project work was that it is crucial to have clear direction.
+Our project proposal was quite vague, and I believe without having defined the
+project early on that whole thing would have been a disaster. 
+Thankfully, our mentors at ON were very patient and helpful in narrowing the scope
+of the project such that it fit both what we as individuals wanted from senior project,
+and what they wanted at ON to have completed.
+
+%Project Management
+Good management is key to success. We never explicitly declared an individual the project
+manager. So throughout the project we would have one of us stepping up to make sure 
+deadlines were getting met, and synthesizing all of our work for presenting. 
+Unfortunately, there were times when it was unclear who was responsible for what parts of the project. 
+At the times when there was more clear roles the project flourished. When leadership was confused, the project usually slowed progress.
+
+% Teams
+I have worked in teams many times for software development using many different development practices. 
+However, this experience brought an unexpected twist.
+I may have interpreted this incorrectly, but it seemed we were highly encouraged to organize 
+our requirements such that we would rely on teammates as little as possible.
+For instance, if my requirement relies on feature A to be finished, don't trust my teammate to finish feature A. Assign feature A to myself instead.
+While I can understand this from the perspective of protecting one's grade, it doesn't seem to aid in team unity.
+Setting our requirements so we didn't rely on one another removed incentive for communication.
+I feel that the lack of communication skills was a problem for all of us. 
+That being said, having non-dependent requirements probably helped in how modular our project became - something I feel was a very big plus.
+
+% Change
+If I were to do it over again I would change 2 things: better communication, and improving our test dataset.
+The communication was lacking many times throughout the project, and I feel we could have
+produced a more superior product had that been fixed. Also, because our dataset was fairly limited and biased, it was difficult to test our algorithms effectively.
+
 \newpage
 
 \vspace*{\fill}
 \begin{center}
-\begin{minipage}{.6\textwidth}
+\begin{minipage}{0.6\textwidth}
 \section*{Appendix 1: Essential Code Listings}
 \end{minipage}
 \end{center}
@@ -1018,7 +1091,7 @@ clean:
 
 \vspace*{\fill}
 \begin{center}
-\begin{minipage}{.6\textwidth}
+\begin{minipage}{0.6\textwidth}
 \section*{Appendix 2: Other Material}
 \end{minipage}
 \end{center}
